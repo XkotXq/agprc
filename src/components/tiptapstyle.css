@@ -1,0 +1,121 @@
+.tiptap > * + * {
+	margin-top: 0.75em;
+}
+.tiptap {
+	outline: none;
+	min-height: 4rem;
+	width: 100%;
+	border-radius: calc(var(--radius) + 4px);
+	background-color: #171717;
+	padding: 0.5rem 0.75rem;
+	font-size: 1rem;
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+	transition: color 150ms, box-shadow 150ms;
+	border: #3a3a3a 1px solid;
+}
+
+.tiptap:focus-visible {
+	box-shadow: 0 0 0 0px #fff, 0 0 0 calc(3px + 0px) rgb(114, 114, 114, 0.5),
+		0 0 #0000;
+        border-color: #737373;
+}
+
+@media (max-width: 768px) {
+	.tiptap {
+		font-size: 0.875rem;
+	}
+}
+
+.tiptap ul,
+.tiptap ol {
+	padding: 0 1rem;
+}
+.tiptap ul {
+	list-style: disc;
+}
+.tiptap ol {
+	list-style: decimal;
+}
+
+.tiptap h1,
+.tiptap h2 {
+	line-height: 1.1;
+}
+.tiptap h1 {
+	font-size: 28px;
+}
+.tiptap h2 {
+	font-size: 20px;
+}
+
+.tiptap img {
+	max-width: 100%;
+	height: auto;
+}
+
+.tiptap blockquote {
+	padding-left: 1rem;
+	border-left: 2px solid #919191;
+}
+
+.tiptap hr {
+	border: none;
+	border-top: 2px solid #27272a;
+	margin: 15px 0;
+}
+.tiptap button {
+	display: flex;
+}
+.tiptap a {
+	text-decoration: underline;
+	color: #919191;
+}
+
+.text-box > * + * {
+	margin-top: 0.75em;
+}
+
+.text-box ul,
+.text-box ol {
+	padding: 0 1rem;
+}
+.text-box ul {
+	list-style: disc;
+}
+.text-box ol {
+	list-style: decimal;
+}
+
+.text-box h1,
+.text-box h2 {
+	line-height: 1.1;
+}
+.text-box h1 {
+	font-size: 28px;
+}
+.text-box h2 {
+	font-size: 20px;
+}
+
+.text-box img {
+	max-width: 100%;
+	height: auto;
+}
+
+.text-box blockquote {
+	padding-left: 1rem;
+	border-left: 2px solid #919191;
+}
+
+.text-box hr {
+	border: none;
+	border-top: 2px solid #27272a;
+	margin: 15px 0;
+}
+.text-box button {
+	display: flex;
+}
+.text-box a {
+	text-decoration: underline;
+	color: #919191;
+}
