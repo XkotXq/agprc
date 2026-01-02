@@ -52,7 +52,8 @@ const MapClient = forwardRef(function Map({ jobs, markersRef }, ref) {
 	useEffect(() => {
 		async function init() {
 			const L = (await import("leaflet")).default;
-			await import("leaflet/dist/leaflet.css");
+			// await import("leaflet/dist/leaflet.css");
+			await import("./styles/leaflet.css");
 			await import("leaflet-defaulticon-compatibility");
 
 			const MarkerCluster = (await import("leaflet.markercluster")).default;
@@ -184,10 +185,10 @@ const MapClient = forwardRef(function Map({ jobs, markersRef }, ref) {
 	}, [jobs, markersRef]);
 
 	return (
-		<div className="relative w-full h-[280px] rounded-3xl overflow-hidden md:h-[580px]">
+		<div className="relative w-full h-70 rounded-3xl overflow-hidden md:h-145">
 			<div
 				id="mapid"
-				className="z-0 inset-0 absolute border border-neutral-700 h-[280px] md:h-[580px]"
+				className="z-0 inset-0 absolute border border-neutral-700 h-70 md:h-145"
 				style={{
 					width: "100%",
 					// height: "580px",

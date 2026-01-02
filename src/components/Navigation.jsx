@@ -23,7 +23,7 @@ export default function Navigation() {
 					{/* <Image src="/globe.svg" height={40} width={40} alt="" /> */}
 					</a>
 				</div>
-				<NavigationMenu className="gap-6 hidden md:relative">
+				<NavigationMenu className="gap-3 md:gap-6">
 					<NavigationMenuList>
 						<NavigationMenuItem className="group/navLink">
 							<NavigationMenuTrigger className="h-6 overflow-hidden duration-500 z-100">
