@@ -59,7 +59,7 @@ export async function GET(req, res) {
 			remote: faker.datatype.boolean(),
 			salary_from: salaryFrom,
 			salary_to: salaryTo,
-			salary_currency: "PLN",
+			salary_currency: "zł",
 			benefits: [],
 			date_posted: faker.date.recent({ days: 30 }),
 			date_expires: faker.date.soon({ days: 60 }),

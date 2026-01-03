@@ -120,6 +120,9 @@ export default function OfferWorksPage() {
 										Wyróżnione pierwsze
 									</label>
 								</div>
+								<Button variant="outline">
+									więcej filtrów
+								</Button>
 							</div>
 
 							<h2 className="text-lg text-neutral-400">

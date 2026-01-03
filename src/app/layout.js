@@ -2,6 +2,7 @@
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { SessionProvider } from "next-auth/react";
 import { useState } from "react";
 
 const spaceGrotesk = Space_Grotesk({
@@ -21,9 +22,11 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="pl" className="dark">
 			<body className={`${spaceGrotesk.variable} font-space antialiased`}>
-				<QueryClientProvider client={queryClient}>
-					{children}
-				</QueryClientProvider>
+				<SessionProvider>
+					<QueryClientProvider client={queryClient}>
+						{children}
+					</QueryClientProvider>
+				</SessionProvider>
 			</body>
 		</html>
 	);

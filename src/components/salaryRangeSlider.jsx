@@ -14,7 +14,7 @@ function SalaryRangeFilter({ value, setValue }) {
         step={100}
         />
         <p>
-          Zakres płacy: {value[0]} – {displayMax} PLN
+          Zakres płacy: {value[0]} – {displayMax} zł
         </p>
     </div>
   );

@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(req) {
 	const session = await getServerSession(authOptions);
-	console.log(session, "test sesja")
+	console.log(session, "test sesja");
 
 	if (!session || session.user.role !== "admin") {
 		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -114,11 +114,15 @@ export async function POST(req) {
 			remote,
 			salary_from,
 			salary_to,
+			salary_type,
+			salary_unit,
 			salary_currency,
 			date_posted,
 			apply_link,
 			is_featured,
 			date_expires,
+			health_card,
+			accommodation,
 		} = body;
 
 		const now = Date.now();
@@ -142,10 +146,10 @@ export async function POST(req) {
             INSERT INTO jobs (
                 title, company, description, city, requirements, responsibilities, province, lat, lng,
                 employment_form, working_time, work_mode, remote, salary_from, salary_to, salary_currency,
-                date_posted, date_expires, apply_link, is_featured, benefits, image, slug, is_active
+                date_posted, date_expires, apply_link, is_featured, benefits, image, slug, is_active, salary_type, salary_unit, health_card, accommodation
             ) VALUES (
                 $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,
-                $11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24
+                $11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28
             )
             RETURNING id
         `;
@@ -165,17 +169,21 @@ export async function POST(req) {
 			working_time,
 			work_mode,
 			remote,
-			salary_from,
-			salary_to,
+			salary_unit === "month" ? salary_from : salary_from*100,
+			salary_unit === "month" ? salary_to : salary_to*100,
 			salary_currency,
 			date_posted || new Date(),
-			date_expires ? date_expires : null,
+			date_expires || null,
 			apply_link,
 			is_featured,
-			{},
+			[],
 			"#",
 			slugBase,
 			adIsActive,
+			salary_type,
+			salary_unit,
+			!!health_card,
+			accommodation || null,
 		];
 
 		const { rows } = await client.query(insertQuery, values);

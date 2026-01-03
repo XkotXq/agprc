@@ -15,7 +15,7 @@ export async function GET(req, res) {
 	const salaryMax = salary_max ? Number(salary_max) : null;
 	const featureFirst = searchParams.get("feature_first") === "true";
 	let baseQuery =
-		"SELECT id, title, company, description, city, province, lat, lng, employment_form, working_time, remote, salary_from, salary_to, salary_currency, date_posted, date_expires, apply_link, image, work_mode, is_featured, slug FROM jobs WHERE is_active = true";
+		"SELECT id, title, company, description, city, province, lat, lng, employment_form, working_time, remote, salary_from, salary_to, salary_currency, date_posted, date_expires, apply_link, image, work_mode, is_featured, slug, salary_type, salary_unit, health_card, accommodation FROM jobs WHERE is_active = true";
 
 	const params = [];
 	let paramIndex = 1;

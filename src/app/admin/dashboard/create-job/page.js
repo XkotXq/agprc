@@ -20,9 +20,9 @@ import SlateEditor from "@/components/SlateEditor";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 
 const nowLocalDatetime = () => {
-const now = new Date();
-now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-return now.toISOString().slice(0, 16);
+	const now = new Date();
+	now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+	return now.toISOString().slice(0, 16);
 };
 export default function CreateJobPage() {
 	const [formData, setFormData] = useState({
@@ -36,21 +36,21 @@ export default function CreateJobPage() {
 		remote: false,
 		salary_from: "",
 		salary_to: "",
-		salary_currency: "PLN",
+		salary_currency: "zł",
+		salary_unit: "month",
+		salary_type: "brutto",
 		date_posted: nowLocalDatetime(),
 		date_expires: "",
 		apply_link: "",
 		image: "",
 		is_featured: false,
+		accommodation: "",
+		health_card: false,
 	});
 	const [location, setLocation] = useState(null);
 	const [description, setDescription] = useState("");
-	const [newCity, setNewCity] = useState("");
 	const mapRef = useRef(null);
 	const descriptionRef = useRef(null);
-	useEffect(() => {
-		console.log(description);
-	}, [description]);
 
 	// const addCity = () => {
 	// 	if (newCity.trim() && !formData.cities.includes(newCity.trim())) {
@@ -111,10 +111,14 @@ export default function CreateJobPage() {
 				salary_from: formData.salary_from,
 				salary_to: formData.salary_to,
 				salary_currency: formData.salary_currency,
+				salary_type: formData.salary_type,
+				salary_unit: formData.salary_unit,
 				date_expires: formData.date_expires,
 				date_posted: formData.date_posted,
 				apply_link: formData.apply_link,
 				is_featured: formData.is_featured,
+				health_card: formData.health_card,
+				accommodation: formData.accommodation || null
 			};
 
 			const response = await fetch("/api/admin/jobs", {
@@ -130,18 +134,22 @@ export default function CreateJobPage() {
 					company: "",
 					description: "",
 					city: "",
-					working_time: "",
-					employment_form: "",
-					work_mode: "",
+					working_time: "", // wymiar pracy np. pół etatu
+					employment_form: "", // forma zatrudnienia np. umowa o pracę
+					work_mode: "", // tryb pracy np. stacjonarna
 					remote: false,
 					salary_from: "",
 					salary_to: "",
-					salary_currency: "PLN",
-					date_posted: new Date().toISOString(),
+					salary_currency: "zł",
+					salary_type: "month",
+					salary_unit: "brutto",
+					date_posted: nowLocalDatetime(),
 					date_expires: "",
 					apply_link: "",
 					image: "",
 					is_featured: false,
+					accommodation: "",
+					health_card: "",
 				});
 				setDescription("");
 				setLocation(null);
@@ -154,31 +162,6 @@ export default function CreateJobPage() {
 			console.error("Error:", error);
 			alert("Błąd przy wysyłaniu danych");
 		}
-	};
-
-	const createJob = () => {
-		const jobItem = {
-			title: formData.title,
-			company: formData.company,
-			description: description,
-			requirements: [],
-			responsibilities: [],
-			city: location.locality,
-			province: location.state || "brak",
-			lat: location?.lat || 0,
-			lng: location?.lng || 0,
-			working_time: formData.working_time,
-			employment_form: formData.employment_form,
-			work_mode: formData.work_mode,
-			remote: formData.remote,
-			salary_from: formData.salary_from,
-			salary_to: formData.salary_to,
-			salary_currency: formData.salary_currency,
-			date_posted: formData.date_posted,
-			apply_link: formData.apply_link,
-			is_featured: formData.is_featured,
-		};
-		console.log(jobItem);
 	};
 
 	return (
@@ -255,94 +238,169 @@ export default function CreateJobPage() {
 											required
 										/>
 										<p className="text-neutral-300">ZŁ</p>
+										<Select
+											value={formData.salary_unit || ""}
+											onValueChange={(value) =>
+												handleSelectChange("salary_unit", value)
+											}>
+											<SelectTrigger className="z-0">
+												<SelectValue />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectItem key="month" value="month">
+													/msc
+												</SelectItem>
+												<SelectItem key="hour" value="hour">
+													/h
+												</SelectItem>
+											</SelectContent>
+										</Select>
+										<Select
+											value={formData.salary_type || "brutto"}
+											onValueChange={(value) =>
+												handleSelectChange("salary_type", value)
+											}>
+											<SelectTrigger className=" z-0">
+												<SelectValue />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectItem key="brutto" value="brutto">
+													brutto
+												</SelectItem>
+												<SelectItem key="netto" value="netto">
+													netto
+												</SelectItem>
+											</SelectContent>
+										</Select>
 									</div>
 								</div>
-								<div className="flex flex-col">
-									<p className="text-sm color-neutral-400 mb-2">
-										Forma zatrudnienia
-									</p>
-									<Select
-										value={formData.employment_form || ""}
-										onValueChange={(value) =>
-											handleSelectChange("employment_form", value)
-										}>
-										<SelectTrigger className="w-full z-0">
-											<SelectValue placeholder="wybierz formę zatrudnienia" />
-										</SelectTrigger>
-										<SelectContent>
-											<SelectItem key="Umowa o pracę" value="Umowa o pracę">
-												Umowa o pracę
-											</SelectItem>
-											<SelectItem key="Umowa zlecenie" value="Umowa zlecenie">
-												Umowa zlecenie
-											</SelectItem>
-											<SelectItem
-												key="Praca tymczasowa"
-												value="Praca tymczasowa">
-												Praca tymczasowa
-											</SelectItem>
-											<SelectItem key="Praca sezonowa" value="Praca sezonowa">
-												Praca sezonowa
-											</SelectItem>
-											<SelectItem key="Staż/praktyki" value="Staż/praktyki">
-												Staż/praktyki
-											</SelectItem>
-										</SelectContent>
-									</Select>
+								<div className="flex flex-row flex-wrap gap-3">
+									<div className="flex flex-col flex-1">
+										<p className="text-sm color-neutral-400 mb-2">
+											Forma zatrudnienia
+										</p>
+										<Select
+											value={formData.employment_form || ""}
+											onValueChange={(value) =>
+												handleSelectChange("employment_form", value)
+											}>
+											<SelectTrigger className="w-full z-0">
+												<SelectValue placeholder="wybierz formę zatrudnienia" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectItem key="Umowa o pracę" value="Umowa o pracę">
+													Umowa o pracę
+												</SelectItem>
+												<SelectItem key="Umowa zlecenie" value="Umowa zlecenie">
+													Umowa zlecenie
+												</SelectItem>
+												<SelectItem
+													key="Praca tymczasowa"
+													value="Praca tymczasowa">
+													Praca tymczasowa
+												</SelectItem>
+												<SelectItem key="Praca sezonowa" value="Praca sezonowa">
+													Praca sezonowa
+												</SelectItem>
+												<SelectItem key="Staż/praktyki" value="Staż/praktyki">
+													Staż/praktyki
+												</SelectItem>
+											</SelectContent>
+										</Select>
+									</div>
+									<div className="flex-1">
+										<p className="text-sm color-neutral-400 mb-2">
+											Wymiar pracy
+										</p>
+										<Select
+											value={formData.working_time || ""}
+											onValueChange={(value) =>
+												handleSelectChange("working_time", value)
+											}>
+											<SelectTrigger className="w-full">
+												<SelectValue placeholder="wybierz wymiar pracy" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectItem key="Pełny etat" value="Pełny etat">
+													Pełny etat
+												</SelectItem>
+												<SelectItem key="Część etatu" value="Część etatu">
+													Część etatu
+												</SelectItem>
+												<SelectItem
+													key="Elastyczny czas pracy"
+													value="Elastyczny czas pracy">
+													Elastyczny czas pracy
+												</SelectItem>
+												<SelectItem
+													key="Praca dodatkowa"
+													value="Praca dodatkowa">
+													Praca dodatkowa
+												</SelectItem>
+											</SelectContent>
+										</Select>
+									</div>
 								</div>
-								<div>
-									<p className="text-sm color-neutral-400 mb-2">Wymiar pracy</p>
-									<Select
-										value={formData.working_time || ""}
-										onValueChange={(value) =>
-											handleSelectChange("working_time", value)
-										}>
-										<SelectTrigger className="w-full">
-											<SelectValue placeholder="wybierz wymiar pracy" />
-										</SelectTrigger>
-										<SelectContent>
-											<SelectItem key="Pełny etat" value="Pełny etat">
-												Pełny etat
-											</SelectItem>
-											<SelectItem key="Część etatu" value="Część etatu">
-												Część etatu
-											</SelectItem>
-											<SelectItem
-												key="Elastyczny czas pracy"
-												value="Elastyczny czas pracy">
-												Elastyczny czas pracy
-											</SelectItem>
-											<SelectItem key="Praca dodatkowa" value="Praca dodatkowa">
-												Praca dodatkowa
-											</SelectItem>
-										</SelectContent>
-									</Select>
-								</div>
-								<div>
-									<p className="text-sm color-neutral-400 mb-2">Tryb pracy</p>
-									<Select
-										className="w-full"
-										value={formData.work_mode || ""}
-										onValueChange={(value) =>
-											handleSelectChange("work_mode", value)
-										}>
-										<SelectTrigger className="w-full">
-											<SelectValue placeholder="wybierz tryb pracy" />
-										</SelectTrigger>
-										<SelectContent>
-											<SelectItem
-												key="praca stacjonrna"
-												value="praca stacjonrna">
-												Praca stacjonarna
-											</SelectItem>
-											<SelectItem key="praca hybrydowa" value="praca hybrydowa">
-												Praca hybrydowa
-											</SelectItem>
-											<SelectItem key="praca zdalna" value="praca zdalna">
-												Praca zdalna
-											</SelectItem>
-										</SelectContent>
-									</Select>
+								<div className="flex gap-3 flex-row flex-warp">
+									<div className="flex-1">
+										<p className="text-sm color-neutral-400 mb-2">Tryb pracy</p>
+										<Select
+											className="w-full"
+											value={formData.work_mode || ""}
+											onValueChange={(value) =>
+												handleSelectChange("work_mode", value)
+											}>
+											<SelectTrigger className="w-full">
+												<SelectValue placeholder="wybierz tryb pracy" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectItem
+													key="Praca stacjonarna"
+													value="Praca stacjonarna">
+													Praca stacjonarna
+												</SelectItem>
+												<SelectItem
+													key="Praca hybrydowa"
+													value="Praca hybrydowa">
+													Praca hybrydowa
+												</SelectItem>
+												<SelectItem key="Praca zdalna" value="Praca zdalna">
+													Praca zdalna
+												</SelectItem>
+											</SelectContent>
+										</Select>
+									</div>
+									<div className="flex-1">
+										<p className="text-sm color-neutral-400 mb-2">
+											Zakwaterowanie
+										</p>
+										<Select
+											className="w-full"
+											value={formData.accommodation || ""}
+											onValueChange={(value) =>
+												handleSelectChange("accommodation", value)
+											}>
+											<SelectTrigger className="w-full">
+												<SelectValue placeholder="wybierz zakwaterowanie" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectItem
+													key="brak informacji"
+													value="brak informacji">
+													Brak informacji
+												</SelectItem>
+												<SelectItem key="zapewnione" value="zapewnione">
+													Zapewnione
+												</SelectItem>
+												<SelectItem key="z dopłatą" value="z dopłatą">
+													Z dopłatą
+												</SelectItem>
+												<SelectItem key="płatne" value="płatne">
+													Płatne
+												</SelectItem>
+											</SelectContent>
+										</Select>
+									</div>
 								</div>
 								<div>
 									<p className="text-sm color-neutral-400 mb-2">
@@ -357,7 +415,42 @@ export default function CreateJobPage() {
 										required
 									/>
 								</div>
-								<div className="flex items-center gap-6">
+
+								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+									<div>
+										<label className="block text-sm font-medium mb-1">
+											Data publikacji
+										</label>
+										<Input
+											type="datetime-local"
+											name="date_posted"
+											value={formData.date_posted}
+											onChange={(e) =>
+												setFormData((prev) => ({
+													...prev,
+													date_posted: e.target.value,
+												}))
+											}
+										/>
+									</div>
+									<div>
+										<label className="block text-sm font-medium mb-1">
+											Data wygaśnięcia
+										</label>
+										<Input
+											type="datetime-local"
+											name="date_expires"
+											value={formData.date_expires}
+											onChange={(e) =>
+												setFormData((prev) => ({
+													...prev,
+													date_expires: e.target.value,
+												}))
+											}
+										/>
+									</div>
+								</div>
+								<div className="flex items-center gap-3 flex-wrap">
 									<div className="flex items-center gap-2">
 										<Checkbox
 											id="remote"
@@ -371,6 +464,24 @@ export default function CreateJobPage() {
 											htmlFor="remote"
 											className="text-sm font-medium cursor-pointer">
 											Możliwość pracy zdalnej
+										</label>
+									</div>
+									<div className="flex items-center gap-2">
+										<Checkbox
+											id="health_card"
+											name="health_card"
+											checked={formData.health_card}
+											onCheckedChange={(checked) =>
+												setFormData((prev) => ({
+													...prev,
+													health_card: checked,
+												}))
+											}
+										/>
+										<label
+											htmlFor="health_card"
+											className="text-sm font-medium cursor-pointer">
+											Wymagana książeczka sanepidowska
 										</label>
 									</div>
 									<div className="flex items-center gap-2">
@@ -497,59 +608,8 @@ export default function CreateJobPage() {
 								</div>
 							</div>
 						</div>
-						{/* <div>
-						<label className="block text-sm font-medium mb-1">
-							Tryb pracy *
-						</label>
-						<Select
-							value={formData.work_mode}
-							onValueChange={(value) => handleSelectChange("work_mode", value)}>
-							<SelectTrigger>
-								<SelectValue />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectItem value="onsite">Na miejscu</SelectItem>
-								<SelectItem value="hybrid">Hybrydowy</SelectItem>
-								<SelectItem value="remote">Zdalnie</SelectItem>
-							</SelectContent>
-						</Select>
-					</div> */}
 
 						{/* Daty */}
-						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-							<div>
-								<label className="block text-sm font-medium mb-1">
-									Data publikacji
-								</label>
-								<Input
-									type="datetime-local"
-									name="date_posted"
-									value={formData.date_posted}
-									onChange={(e) =>
-										setFormData((prev) => ({
-											...prev,
-											date_posted: e.target.value,
-										}))
-									}
-								/>
-							</div>
-							<div>
-								<label className="block text-sm font-medium mb-1">
-									Data wygaśnięcia
-								</label>
-								<Input
-									type="datetime-local"
-									name="date_expires"
-									value={formData.date_expires}
-									onChange={(e) =>
-										setFormData((prev) => ({
-											...prev,
-											date_expires: e.target.value,
-										}))
-									}
-								/>
-							</div>
-						</div>
 
 						{/* Przyciski */}
 						<div className="flex gap-4 mb-12">

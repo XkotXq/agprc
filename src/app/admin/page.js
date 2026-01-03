@@ -1,15 +1,24 @@
 "use client";
-import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { useState, useEffect } from "react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 export default function AdminLoginPage() {
   const router = useRouter();
+  const { status } = useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+    useEffect(() => {
+    if (status === "authenticated") {
+      router.replace("/admin/dashboard");
+    }
+  }, [status, router]);
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();

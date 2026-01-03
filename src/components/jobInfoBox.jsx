@@ -24,6 +24,13 @@ export default function JobInfoBox({ onClick, markersRef, jobData }) {
 			console.error(err);
 		}
 	};
+
+	const salaryValueParse = (min, max) => {
+		if (min === max) {
+			return `${min}`;
+		}
+		return `${min} - ${max}`;
+	};
 	return (
 		<div
 			className={clsx(
@@ -71,10 +78,18 @@ export default function JobInfoBox({ onClick, markersRef, jobData }) {
 					<div className="flex flex-row gap-1 items-center text-neutral-300">
 						<Banknote className="size-5" />
 						<p>
-							{jobData.salary_from === jobData.salary_to
-								? jobData.salary_from
-								: jobData.salary_from + "-" + jobData.salary_to}{" "}
-							{jobData.salary_currency}
+							{jobData.salary_unit === "month"
+								? salaryValueParse(jobData.salary_from, jobData.salary_to)
+								: salaryValueParse(
+										jobData.salary_from / 100,
+										jobData.salary_to / 100
+								  )}
+								  {" "}
+							<span>
+								{jobData.salary_currency}
+								{jobData.salary_unit === "month" ? "" : "/h"}{" "}
+								{jobData.salary_type}
+							</span>
 						</p>
 					</div>
 				</div>
