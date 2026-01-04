@@ -38,17 +38,23 @@ export default function MultiSelectInput({
 	const wrapperRef = useRef(null);
 	const inputRef = useRef(null);
 
+	// Upewnij się, że selected jest zawsze tablicą
+	const selectedArray = Array.isArray(selected) ? selected : [];
+
 	const filtered = data.filter((item) =>
 		item.toLowerCase().includes(search.toLowerCase())
 	);
 
 	const toggleItem = (item) => {
-		if (selected.includes(item)) {
-			setSelected(selected.filter((i) => i !== item));
+		if (selectedArray.includes(item)) {
+			// Usuń element z tablicy
+			const newArray = selectedArray.filter((i) => i !== item);
+			setSelected(newArray);
 		} else {
-			setSelected((prev) => [...prev, item]);
+			// Dodaj element do tablicy
+			const newArray = [...selectedArray, item];
+			setSelected(newArray);
 		}
-		console.log(selected);
 	};
 
 	const handleKeyDown = (e) => {
@@ -117,9 +123,9 @@ export default function MultiSelectInput({
 					}}
 					onKeyDown={handleKeyDown}
 				/>
-				{selected.length > 0 && (
+				{selectedArray.length > 0 && (
 					<div className="absolute top-1/2 -translate-1/2 right-1 rounded-full bg-neutral-200 text-black aspect-square h-[60%] flex justify-center items-center text-sm group">
-						<p className="group-hover:hidden">{selected.length}</p>
+						<p className="group-hover:hidden">{selectedArray.length}</p>
 						<X className="size-3 group-hover:block hidden" onClick={() => {setSelected([])}}/>
 					</div>
 				)}
@@ -132,7 +138,7 @@ export default function MultiSelectInput({
 					)}
 
 					{filtered.map((item, index) => {
-						const checked = selected.includes(item);
+						const checked = selectedArray.includes(item);
 
 						return (
 							<div

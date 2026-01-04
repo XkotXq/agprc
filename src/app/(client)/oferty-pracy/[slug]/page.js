@@ -88,7 +88,7 @@ export default async function JobInfoPage({ params }) {
 													jobData.salary_to / 100
 											  )}{" "}
 										{jobData.salary_currency}
-										{jobData.salary_unit === "month" ? "mies." : "/h"}{" "}
+										{jobData.salary_unit === "month" ? "" : "/h"}{" "}
 									</p>
 								</div>
 								<div>

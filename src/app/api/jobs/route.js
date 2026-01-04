@@ -6,6 +6,7 @@ export async function GET(req, res) {
 	const province = searchParams.get("province");
 	const employmentType = searchParams.get("employmentType");
 	const remote = searchParams.get("remote");
+	const withoutHealthCard = searchParams.get("withoutHealthCard");
 	const keyword = searchParams.get("keyword");
 	const salary_min = searchParams.get("salary_min");
 	const salary_max = searchParams.get("salary_max");
@@ -14,6 +15,14 @@ export async function GET(req, res) {
 	const salaryMin = salary_min ? Number(salary_min) : null;
 	const salaryMax = salary_max ? Number(salary_max) : null;
 	const featureFirst = searchParams.get("feature_first") === "true";
+	const employmentForm = searchParams.get("employment_form");
+	const workingTime = searchParams.get("working_time");
+	const workMode = searchParams.get("work_mode");
+	const accommodation = searchParams.get("accommodation");
+	const selectedEmploymentForms = employmentForm ? employmentForm.split(",") : [];
+	const selectedWorkingTimes = workingTime ? workingTime.split(",") : [];
+	const selectedWorkModes = workMode ? workMode.split(",") : [];
+	const selectedAccommodations = accommodation ? accommodation.split(",") : [];
 	let baseQuery =
 		"SELECT id, title, company, description, city, province, lat, lng, employment_form, working_time, remote, salary_from, salary_to, salary_currency, date_posted, date_expires, apply_link, image, work_mode, is_featured, slug, salary_type, salary_unit, health_card, accommodation FROM jobs WHERE is_active = true";
 
@@ -41,9 +50,13 @@ export async function GET(req, res) {
 		params.push(employmentType);
 	}
 
-	if (remote) {
+	if (remote === "true") {
 		baseQuery += ` AND remote = $${paramIndex++}`;
-		params.push(remote === "true");
+		params.push(true);
+	}
+	if (withoutHealthCard === "true") {
+		baseQuery += ` AND health_card = $${paramIndex++}`;
+		params.push(false);
 	}
 
 	if (keyword) {
@@ -59,6 +72,39 @@ export async function GET(req, res) {
 		baseQuery += ` AND salary_to <= $${paramIndex++}`;
 		params.push(salaryMax);
 	}
+
+	if (selectedEmploymentForms?.length > 0) {
+		const placeholders = selectedEmploymentForms
+			.map(() => `$${paramIndex++}`)
+			.join(", ");
+		baseQuery += ` AND employment_form IN (${placeholders})`;
+		params.push(...selectedEmploymentForms);
+	}
+
+	if (selectedWorkingTimes?.length > 0) {
+		const placeholders = selectedWorkingTimes
+			.map(() => `$${paramIndex++}`)
+			.join(", ");
+		baseQuery += ` AND working_time IN (${placeholders})`;
+		params.push(...selectedWorkingTimes);
+	}
+
+	if (selectedWorkModes?.length > 0) {
+		const placeholders = selectedWorkModes
+			.map(() => `$${paramIndex++}`)
+			.join(", ");
+		baseQuery += ` AND work_mode IN (${placeholders})`;
+		params.push(...selectedWorkModes);
+	}
+
+	if (selectedAccommodations?.length > 0) {
+		const placeholders = selectedAccommodations
+			.map(() => `$${paramIndex++}`)
+			.join(", ");
+		baseQuery += ` AND accommodation IN (${placeholders})`;
+		params.push(...selectedAccommodations);
+	}
+
 	if (featureFirst) {
 		baseQuery += `
     ORDER BY

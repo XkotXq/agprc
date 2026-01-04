@@ -99,7 +99,7 @@ export default function JobInfoBox({ onClick, markersRef, jobData }) {
 							e.stopPropagation();
 							handleClick();
 						}}
-						className="cursor-pointer z-100">
+						className="cursor-pointer z-50">
 						Aplikuj
 					</Button>
 				</div>
