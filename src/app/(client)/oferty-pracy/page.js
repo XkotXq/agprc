@@ -156,7 +156,7 @@ export default function OfferWorksPage() {
   };
 
   return (
-    <section className="mb-24 px-4 md:px-0">
+    <section className="mb-24 px-2 md:px-0">
       <Wrapper>
         <div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-medium my-5">

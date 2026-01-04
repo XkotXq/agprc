@@ -51,7 +51,7 @@ export default async function JobInfoPage({ params }) {
 		return `${min} - ${max}`;
 	};
 	return (
-		<Wrapper>
+		<Wrapper className="px-2 lg:px-0">
 			<JobViewTracker jobId={jobData.id} />
 			<div className="py-5">
 				<Link
@@ -60,12 +60,12 @@ export default async function JobInfoPage({ params }) {
 					<ArrowLeft className="size-5" /> Wróć do ofert
 				</Link>
 			</div>
-			<div className="flex flex-row gap-4">
+			<div className="flex flex-col md:flex-row gap-4">
 				<div className="flex-2 flex flex-col gap-3">
 					<div className="border border-neutral-700 rounded-3xl p-5">
-						<div className="flex justify-between">
+						<div className="w-full grid-cols-[repeat(auto-fit,minmax(200px,1fr))] grid ">
 							<div>
-								<h1 className="text-4xl font-bold mb-2">{jobData.title}</h1>
+								<h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2">{jobData.title}</h1>
 								<div className="flex gap-1 flex-row text-neutral-300 items-center mt-1">
 									<Building2 className="size-4.5" />
 									<p>{jobData.company}</p>
@@ -78,8 +78,8 @@ export default async function JobInfoPage({ params }) {
 									</p>
 								</div>
 							</div>
-							<div>
-								<div className="flex items-center gap-2 text-neutral-100 text-3xl font-bold">
+							<div className="">
+								<div className="flex items-center gap-2 text-neutral-100 text-xl sm:text-2xl md:text-3xl font-bold text-end justify-end">
 									<p>
 										{jobData.salary_unit === "month"
 											? salaryValueParse(jobData.salary_from, jobData.salary_to)
@@ -88,48 +88,48 @@ export default async function JobInfoPage({ params }) {
 													jobData.salary_to / 100
 											  )}{" "}
 										{jobData.salary_currency}
-										{jobData.salary_unit === "month" ? "" : "/h"}{" "}
+										
 									</p>
 								</div>
 								<div>
-									<p className="text-end text-2xl text-neutral-300">
-										{jobData.salary_type}
+									<p className="text-end text-lg sm:text-xl md:text-2xl text-neutral-300">
+										{jobData.salary_type}{jobData.salary_unit === "month" ? "/mies." : "/h"}
 									</p>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div className="grid gap-2 grid-cols-[repeat(auto-fit,minmax(240px,1fr))]">
+					<div className="grid gap-2 grid-cols-[repeat(auto-fit,minmax(200px,1fr))]">
 						<div className="border border-neutral-600 rounded-3xl bg-neutral-900 p-3 flex justify-center flex-col gap-1">
-							<h2 className="inline-flex gap-2 text-md items-center text-neutral-300">
-								<Clock className="size-4.5" /> Wymiar pracy
+							<h2 className="inline-flex gap-1 md:gap-2 text-sm md:text-md items-center text-neutral-300">
+								<Clock className="size-3.5 md:size-4.5" /> Wymiar pracy
 							</h2>
-							<p className="text-xl">{jobData.working_time}</p>
+							<p className="text-md sm:text-xl">{jobData.working_time}</p>
 						</div>
 						<div className="border border-neutral-600 rounded-3xl bg-neutral-900 p-3 flex justify-center flex-col gap-1">
-							<h2 className="inline-flex gap-2 text-md items-center text-neutral-300">
-								<Briefcase className="size-4.5" /> Tryb pracy
+							<h2 className="inline-flex gap-1 md:gap-2 text-sm md:text-md items-center text-neutral-300">
+								<Briefcase className="size-3.5 md:size-4.5" /> Tryb pracy
 							</h2>
-							<p className="text-xl">{jobData.work_mode}</p>
+							<p className="text-md sm:text-xl">{jobData.work_mode}</p>
 						</div>
 						<div className="border border-neutral-600 rounded-3xl bg-neutral-900 p-3 flex justify-center flex-col gap-1">
-							<h2 className="inline-flex gap-2 text-md items-center text-neutral-300">
-								<FileText className="size-4.5" /> Forma zatrudnienia
+							<h2 className="inline-flex gap-1 md:gap-2 text-sm md:text-md items-center text-neutral-300">
+								<FileText className="size-3.5 md:size-4.5" /> Forma zatrudnienia
 							</h2>
-							<p className="text-xl">{jobData.employment_form}</p>
+							<p className="text-md sm:text-xl">{jobData.employment_form}</p>
 						</div>
 						<div className="border border-neutral-600 rounded-3xl bg-neutral-900 p-3 flex justify-center flex-col gap-1">
-							<h2 className="inline-flex gap-2 text-md items-center text-neutral-300">
-								<Laptop className="size-4.5" /> Możliwość pracy zdalnej
+							<h2 className="inline-flex gap-1 md:gap-2 text-sm md:text-md items-center text-neutral-300">
+								<Laptop className="size-3.5 md:size-4.5" /> Możliwość pracy zdalnej
 							</h2>
-							<p className="text-xl">{jobData.remote ? "Tak" : "Nie"}</p>
+							<p className="text-md sm:text-xl">{jobData.remote ? "Tak" : "Nie"}</p>
 						</div>
 						<div className="border border-neutral-600 rounded-3xl bg-neutral-900 p-3 flex justify-center flex-col gap-1">
-							<h2 className="inline-flex gap-2 text-md items-center text-neutral-300">
-								<Banknote className="size-4.5" /> Wynagrodzenie{" "}
+							<h2 className="inline-flex gap-1 md:gap-2 text-sm md:text-md items-center text-neutral-300">
+								<Banknote className="size-3.5 md:size-4.5" /> Wynagrodzenie{" "}
 								{jobData.salary_type}
 							</h2>
-							<p className="text-xl">
+							<p className="text-md sm:text-xl">
 								{jobData.salary_unit === "month"
 									? salaryValueParse(jobData.salary_from, jobData.salary_to)
 									: salaryValueParse(
@@ -137,27 +137,28 @@ export default async function JobInfoPage({ params }) {
 											jobData.salary_to / 100
 									  )}{" "}
 								{jobData.salary_currency}
+								{jobData.salary_unit === "month" ? "/mies." : "/h"}
 							</p>
 						</div>
 						<div className="border border-neutral-600 rounded-3xl bg-neutral-900 p-3 flex justify-center flex-col gap-1">
-							<h2 className="inline-flex gap-2 text-md items-center text-neutral-300">
-								<MapPin className="size-4.5" /> Lokalizacja
+							<h2 className="inline-flex gap-1 md:gap-2 text-sm md:text-md items-center text-neutral-300">
+								<MapPin className="size-3.5 md:size-4.5" /> Lokalizacja
 							</h2>
-							<p className="text-xl">{jobData.city}</p>
+							<p className="text-md sm:text-xl">{jobData.city}</p>
 						</div>
 						<div className="border border-neutral-600 rounded-3xl bg-neutral-900 p-3 flex justify-center flex-col gap-1">
-							<h2 className="inline-flex gap-2 text-md items-center text-neutral-300">
-								<Book className="size-4.5" /> Książeczka sanepido.
+							<h2 className="inline-flex gap-1 md:gap-2 text-sm md:text-md items-center text-neutral-300">
+								<Book className="size-3.5 md:size-4.5" /> Książeczka sanepido.
 							</h2>
-							<p className="text-xl">{jobData.health_card ? "Tak" : "Nie"}</p>
+							<p className="text-md sm:text-xl">{jobData.health_card ? "Tak" : "Nie"}</p>
 						</div>
 						{
 							jobData.accommodation && (
 								<div className="border border-neutral-600 rounded-3xl bg-neutral-900 p-3 flex justify-center flex-col gap-1">
-							<h2 className="inline-flex gap-2 text-md items-center text-neutral-300">
-								<House className="size-4.5" /> Zakwaterowanie
+							<h2 className="inline-flex gap-1 md:gap-2 text-sm md:text-md items-center text-neutral-300">
+								<House className="size-3.5 md:size-4.5" /> Zakwaterowanie
 							</h2>
-							<p className="text-xl">{jobData.accommodation}</p>
+							<p className="text-md sm:text-xl">{jobData.accommodation}</p>
 						</div>
 							)
 						}
@@ -179,7 +180,7 @@ export default async function JobInfoPage({ params }) {
 					</div>
 				</div>
 				<div className="flex-1 relative">
-					<div className="border border-neutral-700 rounded-3xl p-5 bg-neutral-950 sticky top-[calc(72px+1rem)] z-1000">
+					<div className="border border-neutral-700 rounded-3xl p-5 bg-neutral-950 block md:sticky md:top-[calc(72px+1rem)] md:z-1000">
 						<h1 className="font-bold text-neutral-100 text-lg">
 							Aplikuj teraz
 						</h1>
