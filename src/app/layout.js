@@ -4,11 +4,12 @@ import "./globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SessionProvider } from "next-auth/react";
 import { useState } from "react";
+import Script from "next/script";
 
 const spaceGrotesk = Space_Grotesk({
-	variable: "--font-space-grotesk",
-	subsets: ["latin"],
-	weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-space-grotesk",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 // export const metadata = {
@@ -17,17 +18,25 @@ const spaceGrotesk = Space_Grotesk({
 // };
 
 export default function RootLayout({ children }) {
-	const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(() => new QueryClient());
 
-	return (
-		<html lang="pl" className="dark">
-			<body className={`${spaceGrotesk.variable} font-space antialiased`}>
-				<SessionProvider>
-					<QueryClientProvider client={queryClient}>
-						{children}
-					</QueryClientProvider>
-				</SessionProvider>
-			</body>
-		</html>
-	);
+  return (
+    <html lang="pl" className="dark">
+      <head>
+	  <Script
+          async
+          src="http://localhost:3002/worker.js"
+          data-ackee-server="http://localhost:3002"
+          data-ackee-domain-id="c661d174-7a51-4563-bb2d-6979ddf23670"
+        />
+      </head>
+      <body className={`${spaceGrotesk.variable} font-space antialiased`}>
+        <SessionProvider>
+          <QueryClientProvider client={queryClient}>
+            {children}
+          </QueryClientProvider>
+        </SessionProvider>
+      </body>
+    </html>
+  );
 }

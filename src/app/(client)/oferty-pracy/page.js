@@ -71,8 +71,8 @@ export default function OfferWorksPage() {
           fetch("/api/jobs").then((res) => res.json()),
           fetch("/api/cities").then((res) => res.json()),
         ]);
-        setJobs(jobsRes);
-        setCities(citiesRes);
+        setJobs(jobsRes || []);
+        setCities(citiesRes || []);
         setIsFetched(true);
       } catch (err) {
         console.error(err);

@@ -41,7 +41,7 @@ export default async function JobInfoPage({ params }) {
 		);
 	}
 
-	const jobData = await res.json();
+	const jobData = await res.json() || [];
 	const descriptionObj = JSON.parse(jobData.description);
 
 	const salaryValueParse = (min, max) => {
