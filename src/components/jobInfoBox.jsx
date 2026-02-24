@@ -26,6 +26,12 @@ export default function JobInfoBox({ onClick, markersRef, jobData }) {
 	};
 
 	const salaryValueParse = (min, max) => {
+		if (!min && max) {
+			return `do ${max}`;
+		} else if (!max && min) {
+			return `od ${min}`;
+		}
+
 		if (min === max) {
 			return `${min}`;
 		}
@@ -36,7 +42,7 @@ export default function JobInfoBox({ onClick, markersRef, jobData }) {
 			className={clsx(
 				" rounded-3xl p-3  job-item bg-neutral-950 hover:bg-neutral-900 cursor-pointer relative",
 				jobData?.is_featured && "border-neutral-600 border",
-				!jobData?.is_featured && "border"
+				!jobData?.is_featured && "border",
 			)}
 			id={`job-${jobData.id}`}
 			onClick={() => onClick(jobData.id)}
@@ -77,20 +83,21 @@ export default function JobInfoBox({ onClick, markersRef, jobData }) {
 					</div>
 					<div className="flex flex-row gap-1 items-center text-neutral-300">
 						<Banknote className="size-5" />
-						<p>
-							{jobData.salary_unit === "month"
-								? salaryValueParse(jobData.salary_from, jobData.salary_to)
-								: salaryValueParse(
-										jobData.salary_from / 100,
-										jobData.salary_to / 100
-								  )}
-								  {" "}
-							<span>
-								{jobData.salary_currency}
-								{jobData.salary_unit === "month" ? "" : "/h"}{" "}
-								{jobData.salary_type}
-							</span>
-						</p>
+						{!jobData.salary_from && !jobData.salary_to ? (
+							<p>brak informacji</p>
+						) : (
+							<p>
+								{salaryValueParse(
+									jobData.salary_from / 100,
+									jobData.salary_to / 100,
+								)} {" "}
+								<span>
+									{jobData.salary_currency}
+									{jobData.salary_unit === "month" ? "" : "/h"}{" "}
+									{jobData.salary_type}
+								</span>
+							</p>
+						)}
 					</div>
 				</div>
 				<div className="flex items-end gap-2 pointer">

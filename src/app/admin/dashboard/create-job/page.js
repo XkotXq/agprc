@@ -225,7 +225,6 @@ export default function CreateJobPage() {
 											value={formData.salary_from}
 											onChange={handleInputChange}
 											placeholder="od"
-											required
 										/>
 										<p className="text-neutral-300">ZŁ</p>
 										<p className="text-neutral-400">-</p>
@@ -235,7 +234,6 @@ export default function CreateJobPage() {
 											value={formData.salary_to}
 											onChange={handleInputChange}
 											placeholder="do"
-											required
 										/>
 										<p className="text-neutral-300">ZŁ</p>
 										<Select

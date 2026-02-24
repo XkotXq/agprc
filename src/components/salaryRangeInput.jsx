@@ -51,7 +51,8 @@ function SalaryRangeInput({ value, setValue }) {
 		if (finalMin !== null && finalMax !== null && finalMin > finalMax) {
 			[finalMin, finalMax] = [finalMax, finalMin];
 		}
-		setValue([finalMin, finalMax]);
+		if (value[0] != finalMin || value[1] != finalMax)
+			setValue([finalMin, finalMax]);
 	};
 
 	return (

@@ -22,7 +22,7 @@ export default function JobMap({ lat = 48.8566, lng = 2.3522 }) {
 				scrollWheelZoom={true}
 				dragging={true}
 				zoomControl={false}
-        attributionControl={false}
+        		attributionControl={false}
 				className="w-full h-full">
 				<MapResizeFix />
 				<TileLayer

@@ -32,7 +32,11 @@ export default function Navigation() {
 						<ScrollerAnim>Dla pracodawcy</ScrollerAnim>
 					</div>
 				</NavigationMenuTrigger>
-				<NavigationMenuContent>jakaś tam lista</NavigationMenuContent>
+				<NavigationMenuContent>
+					<NavigationMenuLink href="/oferta">
+						Oferta
+					</NavigationMenuLink>
+				</NavigationMenuContent>
 			</NavigationMenuItem>
 			<NavigationMenuItem className="group/navLink">
 				<NavigationMenuLink
@@ -95,7 +99,7 @@ export default function Navigation() {
 	);
 
 	return (
-		<div className="py-4 sticky top-0 bg-[#1a1a1a]/60 backdrop-blur-md border-[#313131] border-b z-1000">
+		<div className="py-4 sticky top-0 bg-neutral-50/60 backdrop-blur-md border-bg-neutral-100 border-b z-1000">
 			<Wrapper className="flex justify-between items-center">
 				<div className="flex justify-center items-center">
 					<a href="/">
@@ -130,7 +134,7 @@ export default function Navigation() {
 						</NavigationMenuList>
 						<Button
 							size="lg"
-							className="flex justify-center items-center group/navLink h-10">
+							className="flex justify-center items-center group/navLink h-10 bg-green-600">
 							<div className="flex flex-col h-6 overflow-hidden">
 								<ScrollerAnim>
 									Współpracuj z nami <ArrowRight />

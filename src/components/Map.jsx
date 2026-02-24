@@ -12,7 +12,7 @@ import { MapPin } from "lucide-react";
 import { Skeleton } from "./ui/skeleton";
 
 let mapInstance = null;
-const MapClient = forwardRef(function Map({ jobs, markersRef }, ref) {
+const MapClient = forwardRef(function Map({ jobs = [], markersRef }, ref) {
 	const internalMapRef = useRef(null);
 
 	useImperativeHandle(ref, () => ({
@@ -47,6 +47,39 @@ const MapClient = forwardRef(function Map({ jobs, markersRef }, ref) {
 
 			focusMarker();
 		},
+
+		addMarker({ id, lat, lng, popupHTML }) {
+			const map = internalMapRef.current;
+			// const cluster = markersRef.current?.cluster;
+			if (!map) return;
+
+			import("leaflet").then((Lmod) => {
+				const L = Lmod.default;
+
+				const jobPin = L.icon({
+					iconUrl: "/clientLoc.png",
+					iconSize: [16, 16],
+					iconAnchor: [8, 8],
+				});
+
+				const marker = L.marker([lat, lng], { icon: jobPin });
+				if (popupHTML) {
+					marker.bindPopup(popupHTML);
+				}
+				marker.addTo(map);
+				// cluster.addLayer(marker);
+				markersRef.current[id] = marker;
+			});
+		},
+		removeMarker(id) {
+			const marker = markersRef.current?.[id];
+			const map = internalMapRef.current;
+
+			if (!marker || !map) return;
+
+			map.removeLayer(marker);
+			delete markersRef.current[id]; 
+		},
 	}));
 	const [isMapReady, setIsMapReady] = useState(false);
 	useEffect(() => {
@@ -60,10 +93,19 @@ const MapClient = forwardRef(function Map({ jobs, markersRef }, ref) {
 			await import("leaflet.markercluster/dist/MarkerCluster.css");
 			await import("leaflet.markercluster/dist/MarkerCluster.Default.css");
 
+			const jobPin = L.icon({
+				iconUrl: "/locPin2.png",
+				shadowUrl: "/locPinShadow.png",
+				iconSize: [24, 24],
+				iconAnchor: [12, 24],
+				shadowSize: [24, 24],
+				shadowAnchor: [12, 24]
+			});
+
 			if (!mapInstance) {
 				mapInstance = L.map("mapid", { attributionControl: false }).setView(
 					[52.2297, 21.0122],
-					6
+					6,
 				);
 
 				internalMapRef.current = mapInstance;
@@ -93,12 +135,6 @@ const MapClient = forwardRef(function Map({ jobs, markersRef }, ref) {
 			const cluster = markersRef.current.cluster;
 			if (cluster && cluster.clearLayers) cluster.clearLayers(); // usuń stare pinezki
 
-			const jobPin = L.icon({
-				iconUrl: "/locPin.png",
-				iconSize: [32, 32],
-				iconAnchor: [16, 32],
-			});
-
 			jobs.forEach((job) => {
 				const popupHTML = renderToString(
 					<div className="bg-neutral-950 rounded-xl p-2">
@@ -107,7 +143,7 @@ const MapClient = forwardRef(function Map({ jobs, markersRef }, ref) {
 							<MapPin className="w-3 h-3" />
 							<p className="m-0 text-sm">{job.city}</p>
 						</div>
-					</div>
+					</div>,
 				);
 
 				const marker = L.marker([job.lat, job.lng], { icon: jobPin });

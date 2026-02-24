@@ -40,10 +40,13 @@ export default function MultiSelectInput({
 
 	// Upewnij się, że selected jest zawsze tablicą
 	const selectedArray = Array.isArray(selected) ? selected : [];
-
-	const filtered = data.filter((item) =>
-		item.toLowerCase().includes(search.toLowerCase())
-	);
+	const filtered = Array.isArray(data)
+		? data.filter(
+				(item) =>
+					typeof item === "string" &&
+					item.toLowerCase().includes((search || "").toLowerCase()),
+			)
+		: [];
 
 	const toggleItem = (item) => {
 		if (selectedArray.includes(item)) {
@@ -61,7 +64,7 @@ export default function MultiSelectInput({
 		if (e.key === "ArrowDown") {
 			e.preventDefault();
 			setHighlightIndex((prev) =>
-				prev < filtered.length - 1 ? prev + 1 : prev
+				prev < filtered.length - 1 ? prev + 1 : prev,
 			);
 		}
 
@@ -112,7 +115,7 @@ export default function MultiSelectInput({
 						"file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-neutral-900 border-input h-9 w-full min-w-0 rounded-xl border bg-neutral-900 px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
 						"focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
 						"aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
-						className
+						className,
 					)}
 					placeholder={placeholder}
 					value={search}
@@ -124,9 +127,14 @@ export default function MultiSelectInput({
 					onKeyDown={handleKeyDown}
 				/>
 				{selectedArray.length > 0 && (
-					<div className="absolute top-1/2 -translate-1/2 right-1 rounded-full bg-neutral-200 text-black aspect-square h-[60%] flex justify-center items-center text-sm group">
+					<div className="absolute top-1/2 -translate-1/2 -right-0.5 rounded-full bg-neutral-200 text-black aspect-square h-[60%] flex justify-center items-center text-sm group">
 						<p className="group-hover:hidden">{selectedArray.length}</p>
-						<X className="size-3 group-hover:block hidden" onClick={() => {setSelected([])}}/>
+						<X
+							className="size-3 group-hover:block hidden"
+							onClick={() => {
+								setSelected([]);
+							}}
+						/>
 					</div>
 				)}
 			</div>

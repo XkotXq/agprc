@@ -21,9 +21,15 @@ export default async function AdminDashboardPage() {
 
 	let jobsData = [];
 
-	const result = await pool.query("SELECT id, title, company, description, city, province, lat, lng, employment_form, working_time, remote, salary_from, salary_to, salary_currency, date_posted, date_expires, apply_link, image, work_mode, is_featured, slug, is_active FROM jobs ORDER BY id DESC");
-
-	jobsData = result.rows;
+	try {
+		const result = await pool.query(
+			"SELECT id, title, company, description, city, province, lat, lng, employment_form, working_time, remote, salary_from, salary_to, salary_currency, date_posted, date_expires, apply_link, image, work_mode, is_featured, slug, is_active FROM jobs ORDER BY id DESC",
+		);
+		jobsData = result.rows;
+	} catch (error) {
+		console.error("Database error:", error);
+		jobsData = [];
+	}
 	return (
 		<div>
 			<div className="w-full flex items-center gap-2">

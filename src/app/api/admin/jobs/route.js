@@ -128,6 +128,25 @@ export async function POST(req) {
 		const now = Date.now();
 		const date_post = new Date(date_posted);
 
+		function toCanonical(value, type, unit, fraction = 1) {
+			let v = Number(value);
+
+			if (type === "netto") {
+				v = v * 1.25;
+			}
+
+			if (unit === "month") {
+				const hours = 168 * fraction;
+				v = v / hours;
+			}
+			return Math.round(v);
+		}
+
+		const salary_from_canonical = toCanonical(salary_from*100, salary_type, salary_unit);
+		const salary_to_canonical = toCanonical(salary_to*100, salary_type, salary_unit);
+
+
+
 		// base slug
 		const slugBase = slugify(title, {
 			lower: true,
@@ -146,15 +165,14 @@ export async function POST(req) {
             INSERT INTO jobs (
                 title, company, description, city, requirements, responsibilities, province, lat, lng,
                 employment_form, working_time, work_mode, remote, salary_from, salary_to, salary_currency,
-                date_posted, date_expires, apply_link, is_featured, benefits, image, slug, is_active, salary_type, salary_unit, health_card, accommodation
+                date_posted, date_expires, apply_link, is_featured, benefits, image, slug, is_active, salary_type, salary_unit, health_card, accommodation, salary_from_canonical, salary_to_canonical
             ) VALUES (
                 $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,
-                $11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28
+                $11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30
             )
             RETURNING id
         `;
 		const adIsActive = date_post.getTime() <= now;
-		console.log(adIsActive, "pokaż jak to idzie");
 		const values = [
 			title,
 			company,
@@ -169,8 +187,8 @@ export async function POST(req) {
 			working_time,
 			work_mode,
 			remote,
-			salary_unit === "month" ? salary_from : salary_from*100,
-			salary_unit === "month" ? salary_to : salary_to*100,
+			salary_from ? salary_from*100 : null,
+			salary_to ? salary_to*100 : null,
 			salary_currency,
 			date_posted || new Date(),
 			date_expires || null,
@@ -184,6 +202,8 @@ export async function POST(req) {
 			salary_unit,
 			!!health_card,
 			accommodation || null,
+			salary_from_canonical,
+			salary_to_canonical
 		];
 
 		const { rows } = await client.query(insertQuery, values);

@@ -1,11 +1,14 @@
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
-import jwt from "jsonwebtoken";
+import createMiddleware from "next-intl/middleware";
+import { routing } from "./i18n/routing";
 
-export async function middleware(request) {
+const handleI18nRouting = createMiddleware(routing);
+
+export async function proxy(request) {
 	const { pathname } = request.nextUrl;
 
-	 if (pathname.startsWith("/api/admin")) {
+	if (pathname.startsWith("/api/admin")) {
 		const token = await getToken({
 			req: request,
 			secret: process.env.NEXTAUTH_SECRET,
@@ -39,9 +42,13 @@ export async function middleware(request) {
 		return NextResponse.next();
 	}
 
-	return NextResponse.next();
+	return handleI18nRouting(request);
 }
 
 export const config = {
-	matcher: ["/api/admin/:path*", "/admin/dashboard/:path*"],
+	matcher: [
+		"/((?!api|admin|_next|_vercel|.*\\..*).*)",
+		"/api/admin/:path*",
+		"/admin/dashboard/:path*",
+	],
 };

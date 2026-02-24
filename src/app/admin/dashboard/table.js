@@ -83,6 +83,8 @@ export const columns = [
 		enableHiding: false,
 	},
 	{
+		id: "index",
+		name: "Lp",
 		accessorKey: "index",
 		header: ({ column }) => {
 			return (
@@ -98,6 +100,8 @@ export const columns = [
 		cell: ({ row }) => <div>{row.index + 1}</div>,
 	},
 	{
+		id: "is_active",
+		name: "Dostępność",
 		accessorKey: "is_active",
 		header: ({ column }) => {
 			return (
@@ -105,7 +109,7 @@ export const columns = [
 					variant="ghost"
 					className="text-center"
 					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-					dostępne
+					Dostępne
 					<ArrowUpDown />
 				</Button>
 			);
@@ -121,6 +125,8 @@ export const columns = [
 		),
 	},
 	{
+		id: "title",
+		name: "Tytuł",
 		accessorKey: "title",
 		header: ({ column }) => {
 			return (
@@ -137,6 +143,8 @@ export const columns = [
 		),
 	},
 	{
+		id: "company",
+		name: "Firma",
 		accessorKey: "company",
 		header: ({ column }) => {
 			return (
@@ -154,6 +162,8 @@ export const columns = [
 		),
 	},
 	{
+		id: "city",
+		name: "Miejscowość",
 		accessorKey: "city",
 		header: ({ column }) => {
 			return (
@@ -175,6 +185,8 @@ export const columns = [
 		},
 	},
 	{
+		id: "province",
+		name: "Województwo",
 		accessorKey: "province",
 		header: ({ column }) => {
 			return (
@@ -191,6 +203,8 @@ export const columns = [
 		),
 	},
 	{
+		id: "salary",
+		name: "Wynagrodzenie",
 		accessorKey: "salary",
 		header: () => <div className="text-right">Wynagrodzenie</div>,
 		cell: ({ row }) => {
@@ -217,6 +231,8 @@ export const columns = [
 		},
 	},
 	{
+		id: "date_posted",
+		name: "Data stworzenia",
 		accessorKey: "date_posted",
 		header: ({ column }) => {
 			return (
@@ -240,6 +256,7 @@ export const columns = [
 	},
 	{
 		id: "actions",
+		accessorKey: "actions",
 		enableHiding: false,
 		cell: ({ row }) => {
 			const payment = row.original;
@@ -328,7 +345,7 @@ export default function DataTableDemo({ initialData = [] }) {
 										onCheckedChange={(value) =>
 											column.toggleVisibility(!!value)
 										}>
-										{column.id}
+										{column.columnDef.name}
 									</DropdownMenuCheckboxItem>
 								);
 							})}

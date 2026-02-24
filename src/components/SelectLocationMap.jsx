@@ -35,6 +35,8 @@ const containerRef = useRef(null);
         attribution: "© OpenStreetMap",
       }).addTo(map);
 
+
+
       const jobPin = L.icon({
         iconUrl: "/locPin.png",
         iconSize: [32, 32],
