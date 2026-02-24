@@ -137,9 +137,9 @@ const MapClient = forwardRef(function Map({ jobs = [], markersRef }, ref) {
 
 			jobs.forEach((job) => {
 				const popupHTML = renderToString(
-					<div className="bg-neutral-950 rounded-xl p-2">
+					<div className="bg-neutral-100 rounded-xl p-2 shadow-md">
 						<h3 className="text-md">{job.title}</h3>
-						<div className="flex gap-1 text-neutral-300 items-center">
+						<div className="flex gap-1 text-neutral-900 items-center">
 							<MapPin className="w-3 h-3" />
 							<p className="m-0 text-sm">{job.city}</p>
 						</div>
@@ -224,14 +224,14 @@ const MapClient = forwardRef(function Map({ jobs = [], markersRef }, ref) {
 		<div className="relative w-full h-70 rounded-3xl overflow-hidden md:h-145">
 			<div
 				id="mapid"
-				className="z-0 inset-0 absolute border border-neutral-700 h-70 md:h-145"
+				className="z-0 inset-0 absolute h-70 md:h-145"
 				style={{
 					width: "100%",
 					// height: "580px",
 				}}
 			/>
 
-			{!isMapReady && <Skeleton className="w-full h-full" />}
+			{!isMapReady && <Skeleton className="w-full h-full " />}
 		</div>
 	);
 });

@@ -32,10 +32,30 @@ export default function Navigation() {
 						<ScrollerAnim>Dla pracodawcy</ScrollerAnim>
 					</div>
 				</NavigationMenuTrigger>
-				<NavigationMenuContent>
-					<NavigationMenuLink href="/oferta">
-						Oferta
-					</NavigationMenuLink>
+				<NavigationMenuContent className="rounded-2xl">
+					<ul className="w-54">
+						<li>
+							<NavigationMenuLink asChild>
+								<Link href="/#oferta" className="w-full">
+									<div className="hover:bg-green-400 w-full rounded-lg p-1">Oferta</div>
+								</Link>
+							</NavigationMenuLink>
+						</li>
+						<li>
+							<NavigationMenuLink asChild>
+								<Link href="/oferta" className="w-full">
+									<div className="hover:bg-green-400 w-full rounded-lg p-1">Co to outsourcing procesowy</div>
+								</Link>
+							</NavigationMenuLink>
+						</li>
+						<li>
+							<NavigationMenuLink asChild>
+								<Link href="/oferta" className="w-full">
+									<div className="hover:bg-green-400 w-full rounded-lg p-1">Dlaczego my?</div>
+								</Link>
+							</NavigationMenuLink>
+						</li>
+					</ul>
 				</NavigationMenuContent>
 			</NavigationMenuItem>
 			<NavigationMenuItem className="group/navLink">
@@ -115,8 +135,8 @@ export default function Navigation() {
 								<span className="sr-only">Otwórz menu</span>
 							</Button>
 						</SheetTrigger>
-						<SheetContent 
-							side="right" 
+						<SheetContent
+							side="right"
 							className="w-[300px] sm:w-[400px] z-1000"
 							// overlayClassName="z-100"
 						>
@@ -129,9 +149,7 @@ export default function Navigation() {
 					</Sheet>
 				) : (
 					<NavigationMenu className="gap-3 md:gap-6">
-						<NavigationMenuList>
-							{navItems}
-						</NavigationMenuList>
+						<NavigationMenuList>{navItems}</NavigationMenuList>
 						<Button
 							size="lg"
 							className="flex justify-center items-center group/navLink h-10 bg-green-600">
@@ -157,5 +175,5 @@ const ScrollerAnim = ({ children }) => {
 				{children}
 			</span>
 		</>
-	); 
+	);
 };

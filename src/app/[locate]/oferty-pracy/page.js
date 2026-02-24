@@ -21,12 +21,11 @@ import {
 import {
 	Select,
 	SelectContent,
-	SelectGroup,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { LocateFixed, MapPin, X } from "lucide-react";
+import { DotBackground } from "@/components/ui/dotBackground";
 
 const MemoizedJobInfoBox = memo(JobInfoBox);
 
@@ -44,7 +43,7 @@ const JobList = memo(({ jobs, handleGoToJob, markersRef, isFetched }) => {
 						/>
 					))
 				) : (
-					<p className="text-center text-neutral-400 text-lg">
+					<p className="text-center text-neutral-800 text-lg">
 						Brak ofert pracy
 					</p>
 				)
@@ -76,7 +75,6 @@ export default function OfferWorksPage() {
 		workingTime: [],
 		employmentForm: [],
 		workMode: [],
-		area: "",
 	});
 	const keywordRef = useRef("");
 	const [isFetched, setIsFetched] = useState(false);
@@ -94,8 +92,6 @@ export default function OfferWorksPage() {
 
 	const [jobs, setJobs] = useState([]);
 	const [cities, setCities] = useState([]);
-	const [location, setLocation] = useState(null);
-
 	const markersRef = useRef({});
 	const mapRef = useRef(null);
 
@@ -141,12 +137,6 @@ export default function OfferWorksPage() {
 		if (filters.keyword) params.set("keyword", filters.keyword);
 		if (filters.withoutHealthCard)
 			params.set("withoutHealthCard", filters.withoutHealthCard);
-
-		if (location) {
-			params.set("lat", location.latitude);
-			params.set("lng", location.longitude);
-			if (filters.area) params.set("area", filters.area);
-		}
 
 		if (filters.selectedLocations.length > 0)
 			params.set("province", filters.selectedLocations.join(","));
@@ -239,31 +229,8 @@ export default function OfferWorksPage() {
 		}
 	};
 
-	const handleLocateUser = () => {
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(
-				(position) => {
-					const { latitude, longitude } = position.coords;
-					mapRef.current?.addMarker({
-						id: "me",
-						lat:latitude,
-						lng: longitude,
-						popupHTML: "Twoja lokalizacja",
-					});
-
-					mapRef.current?.flyTo?.(latitude, longitude);
-					setLocation({ latitude, longitude });
-				},
-				(error) => {
-					console.error("Error locating user:", error);
-				},
-			);
-		} else {
-			console.error("Geolocation is not supported by this browser.");
-		}
-	};
-
 	return (
+		<DotBackground>
 		<section className="mb-24 px-2 md:px-0">
 			<Wrapper>
 				<div>
@@ -280,42 +247,6 @@ export default function OfferWorksPage() {
 									type="text"
 									placeholder="Wyszukaj stanowisko, firmę lub inne słowo kluczowe"
 								/>
-								<div className="flex">
-									{/* <Input className="border-r-0 rounded-r-none" /> */}
-									<Button
-										className="border-r-0 rounded-r-none group"
-										variant="outline"
-										onClick={
-											location ? () => {setLocation(null); mapRef?.current?.removeMarker("me")} : handleLocateUser
-										}>
-										{location ? (
-											<>
-												<LocateFixed className="group-hover:hidden" />
-												<X className="group-hover:block hidden" />
-											</>
-										) : (
-											<MapPin />
-										)}
-									</Button>
-									<Select
-										value={filters.area || ""}
-										onValueChange={(value) =>
-											setFilters((prev) => ({ ...prev, area: value }))
-										}>
-										<SelectTrigger className="rounded-l-none">
-											<SelectValue placeholder="odległość" />
-										</SelectTrigger>
-										<SelectContent>
-											<SelectGroup>
-												<SelectItem value="10">10km</SelectItem>
-												<SelectItem value="20">20km</SelectItem>
-												<SelectItem value="30">30km</SelectItem>
-												<SelectItem value="50">50km</SelectItem>
-												<SelectItem value="100">100km</SelectItem>
-											</SelectGroup>
-										</SelectContent>
-									</Select>
-								</div>
 								<Button
 									onClick={() =>
 										setFilters((prev) => ({
@@ -379,7 +310,7 @@ export default function OfferWorksPage() {
 										<div className="space-y-6 mt-2 pl-6 overflow-y-auto">
 											{/* Forma zatrudnienia */}
 											<div className="mb-3">
-												<h3 className="font-semibold mb-2 text-neutral-200">
+												<h3 className="font-semibold mb-2 text-neutral-900">
 													Forma zatrudnienia
 												</h3>
 												<div className="space-y-2">
@@ -409,7 +340,7 @@ export default function OfferWorksPage() {
 															/>
 															<label
 																htmlFor={`employment-${form}`}
-																className="text-sm font-medium cursor-pointer text-neutral-400">
+																className="text-sm font-medium cursor-pointer text-neutral-800">
 																{form}
 															</label>
 														</div>
@@ -419,7 +350,7 @@ export default function OfferWorksPage() {
 
 											{/* Wymiar pracy */}
 											<div className="mb-3">
-												<h3 className="text font-semibold mb-2 text-neutral-200">
+												<h3 className="text font-semibold mb-2 text-neutral-900">
 													Wymiar pracy
 												</h3>
 												<div className="space-y-2">
@@ -448,7 +379,7 @@ export default function OfferWorksPage() {
 															/>
 															<label
 																htmlFor={`workingTime-${time}`}
-																className="text-sm font-medium cursor-pointer text-neutral-400">
+																className="text-sm font-medium cursor-pointer text-neutral-800">
 																{time}
 															</label>
 														</div>
@@ -458,7 +389,7 @@ export default function OfferWorksPage() {
 
 											{/* Tryb pracy */}
 											<div className="mb-3">
-												<h3 className="text font-semibold mb-2 text-neutral-200">
+												<h3 className="text font-semibold mb-2 text-neutral-900">
 													Tryb pracy
 												</h3>
 												<div className="space-y-2">
@@ -484,7 +415,7 @@ export default function OfferWorksPage() {
 															/>
 															<label
 																htmlFor={`workMode-${mode}`}
-																className="text-sm font-medium cursor-pointer text-neutral-400">
+																className="text-sm font-medium cursor-pointer text-neutral-800">
 																{mode}
 															</label>
 														</div>
@@ -494,7 +425,7 @@ export default function OfferWorksPage() {
 
 											{/* Zakwaterowanie */}
 											<div className="mb-3">
-												<h3 className="text font-semibold mb-2 text-neutral-200">
+												<h3 className="text font-semibold mb-2 text-neutral-900">
 													Zakwaterowanie
 												</h3>
 												<div className="space-y-2">
@@ -518,7 +449,7 @@ export default function OfferWorksPage() {
 															/>
 															<label
 																htmlFor={`accommodation-${acc}`}
-																className="text-sm font-medium cursor-pointer text-neutral-400">
+																className="text-sm font-medium cursor-pointer text-neutral-800">
 																{acc === "brak informacji"
 																	? "Brak informacji"
 																	: acc}
@@ -530,7 +461,7 @@ export default function OfferWorksPage() {
 
 											{/* Inne opcje */}
 											<div className="border-t pt-4">
-												<h3 className="text font-semibold mb-2 text-neutral-200">
+												<h3 className="text font-semibold mb-2 text-neutral-900">
 													Inne
 												</h3>
 												<div className="space-y-2">
@@ -547,7 +478,7 @@ export default function OfferWorksPage() {
 														/>
 														<label
 															htmlFor="remote"
-															className="text-sm font-medium cursor-pointer text-neutral-400">
+															className="text-sm font-medium cursor-pointer text-neutral-800">
 															Możliwość pracy zdalnej
 														</label>
 													</div>
@@ -564,7 +495,7 @@ export default function OfferWorksPage() {
 														/>
 														<label
 															htmlFor="sanepid"
-															className="text-sm font-medium cursor-pointer text-neutral-400">
+															className="text-sm font-medium cursor-pointer text-neutral-800">
 															Bez książeczki sanepidowskiej
 														</label>
 													</div>
@@ -581,7 +512,7 @@ export default function OfferWorksPage() {
 														/>
 														<label
 															htmlFor="featured-sheet"
-															className="text-sm font-medium cursor-pointer text-neutral-400">
+															className="text-sm font-medium cursor-pointer text-neutral-800">
 															Wyróżnione ogłoszenia pierwsze
 														</label>
 													</div>
@@ -594,7 +525,7 @@ export default function OfferWorksPage() {
 							<div>
 								{filters.keyword && (
 									<div className="flex gap-2">
-										<p className="text-neutral-400">
+										<p className="text-neutral-800">
 											Wyniki dla "{filters.keyword}"
 										</p>
 										<button
@@ -611,12 +542,12 @@ export default function OfferWorksPage() {
 									</div>
 								)}
 								{isFetched ? (
-									<h2 className="text-lg text-neutral-400">
+									<h2 className="text-lg text-neutral-800">
 										Znaleziono {jobs.length || 0}{" "}
 										{polishPlural(jobs.length, ["ofertę", "oferty", "ofert"])}
 									</h2>
 								) : (
-									<h2 className="text-lg text-neutral-400">Pobiernie ofert</h2>
+									<h2 className="text-lg text-neutral-800">Pobiernie ofert</h2>
 								)}
 							</div>
 						</div>
@@ -635,5 +566,7 @@ export default function OfferWorksPage() {
 				</div>
 			</Wrapper>
 		</section>
+			</DotBackground>
+
 	);
 }

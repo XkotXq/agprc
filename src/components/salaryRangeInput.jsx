@@ -78,8 +78,8 @@ function SalaryRangeInput({ value, setValue }) {
 					</button>
 				) : null}
 			</div>
-			<p className="text-neutral-300">ZŁ</p>
-			<p className="text-neutral-400">-</p>
+			<p className="text-neutral-700">ZŁ</p>
+			<p className="text-neutral-500">-</p>
 			<div className="relative">
 				<Input
 					type="text"
@@ -101,7 +101,7 @@ function SalaryRangeInput({ value, setValue }) {
 					</button>
 				) : null}
 			</div>
-			<p className="text-neutral-300">ZŁ</p>
+			<p className="text-neutral-700">ZŁ</p>
 		</div>
 	);
 }

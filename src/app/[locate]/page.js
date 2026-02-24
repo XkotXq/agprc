@@ -139,7 +139,9 @@ export default function Home() {
 					</ScrollerAnim>
 				</Link>
 			</section> */}
-			<section className="pb-18 py-8 bg-neutral-50 overflow-hidden relative">
+			<section
+				className="pb-18 py-8 bg-neutral-50 overflow-hidden relative"
+				id="oferta">
 				<Wrapper className="z-10">
 					<h2 className="text-6xl text-center font-bold text-green-500 ">
 						Oferta
@@ -193,7 +195,7 @@ export default function Home() {
 				</Wrapper>
 				<div className="absolute bg-green-200/50 top-1/2 left-0 -translate-x-1/2  rounded-full h-[30vw] w-[30vw] -translate-y-1/2 z-0 pointer-events-none flex items-center justify-center" />
 			</section>
-			<DotBackground className="bg-green-200" classNameMask="bg-green-50">
+			{/* <DotBackground className="bg-green-200" classNameMask="bg-green-50">
 				<section className="py-8 relative ">
 					<Wrapper>
 						<h1 className="text-3xl font-bold text-center py-5">
@@ -233,7 +235,7 @@ export default function Home() {
 						</div>
 					</Wrapper>
 				</section>
-			</DotBackground>
+			</DotBackground> */}
 			{/* <section className="bg-green-500 py-12">
 				<Wrapper>
 					<h1 className=" text-4xl font-bold">Zapraszamy do współpacy</h1>
@@ -247,17 +249,58 @@ export default function Home() {
 			<section className="py-12">
 				<Wrapper className="flex gap-5">
 					<div className="rounded-3xl p-2 relative flex-1 shadow-sm bg-linear-to-br from-neutral-100 to-neutral-200">
-						<div className="flex flex-col bg-neutral-100 w-full h-full p-6 rounded-2xl shadow-sm ">
-							<h1 className="text-3xl font-bold">
-								Czym jest outsourcing procesowy?
-							</h1>
-							<p className="pt-3">
-								Outsourcing procesowy to strategia zarządzania, w której Państwa
-								firma zleca wykonanie określonych procesów biznesowych
-								zewnętrzenemu dostawcy usług. Celem tego podejścia jest
-								zwiększenie efektywności, skupienie się na kluczowych
-								kompetencjach firmy oraz optymalizacja kosztów.
-							</p>
+						<div className="flex flex-col bg-neutral-100 w-full h-full p-6 rounded-2xl shadow-sm relative overflow-hidden">
+							<div className="relative z-10">
+								<h1 className="text-3xl font-bold">
+									Czym jest outsourcing procesowy?
+								</h1>
+								<p className="pt-3">
+									Outsourcing procesowy to strategia zarządzania, w której
+									Państwa firma zleca wykonanie określonych procesów biznesowych
+									zewnętrzenemu dostawcy usług. Celem tego podejścia jest
+									zwiększenie efektywności, skupienie się na kluczowych
+									kompetencjach firmy oraz optymalizacja kosztów.
+								</p>
+							</div>
+							<div className="absolute bottom-0 right-0 inset-y-0 pointer-events-none flex items-end">
+								<svg
+									className="h-4/5 translate-x-[10%] translate-y-[5%] w-auto max-h-none"
+									preserveAspectRatio="xMaxYMax meet"
+									xmlns="http://www.w3.org/2000/svg"
+									xmlSpace="preserve"
+									fillRule="evenodd"
+									strokeLinejoin="round"
+									strokeMiterlimit="2"
+									clipRule="evenodd"
+									viewBox="0 0 1908 1907">
+									<path
+										fill="#E5E5E5"
+										fillOpacity="0.75"
+										d="M635.284 1906.465H0v-635.284c350.858 0 635.283 284.426 635.283 635.284"></path>
+									<path
+										fill="#E5E5E5"
+										fillOpacity="0.5"
+										d="M635.283 1271.18V635.898h635.284v.001c0 350.858-284.426 635.283-635.283 635.283z"></path>
+									<path
+										fill="#E5E5E5"
+										fillOpacity="0.9"
+										d="M1272.406 1906.465V1271.18h635.284c0 350.858-284.426 635.284-635.283 635.284z"></path>
+									<circle
+										cx="1116.502"
+										cy="3023.155"
+										r="484.719"
+										fill="#E5E5E5"
+										fillOpacity="0.7"
+										transform="matrix(.65594 0 0 .65594 856.767 -1665.07)"></circle>
+									<circle
+										cx="1116.502"
+										cy="3023.155"
+										r="484.719"
+										fill="#E5E5E5"
+										fillOpacity="0.65"
+										transform="matrix(.65594 0 0 .65594 220.87 -394.503)"></circle>
+								</svg>
+							</div>
 						</div>
 					</div>
 					<div className="flex flex-col bg-linear-to-br from-green-400 to-green-500 rounded-3xl p-8 relative overflow-hidden flex-1">
@@ -360,6 +403,35 @@ export default function Home() {
 					</div>
 				</Wrapper>
 			</section>
+
+			<section className="py-18">
+				<Wrapper>
+					<h1 className="text-6xl font-bold text-center text-green-400">
+						O nas
+					</h1>
+					<h2 className="text-4xl font-bold text-center">
+						Twoj partner w rekrutacji i zatrudnieniu
+					</h2>
+					<div className="flex">
+						<div className="flex-1">
+							<p>
+								Jesteśmy firmą, która zajmuje się rekrutacją i zatrudnieniem
+								pracownikow z Polski oraz cudzoziemcow dla firm o roznym profilu
+								działalności. Dbamy o dostarczanie naszym klientom kandydatow
+								zgodnie z ich potrzebami i wymaganiami. Naszym klientom
+								zapewniamy wsparcie, jakim jest dwujęzyczny koordynator w celu
+								zapewnienia prawidłowej komunikacji z pracownikami.
+							</p>
+						</div>
+						<div className="flex-1"></div>
+					</div>
+				</Wrapper>
+			</section>
+			<section className="py-18">
+				<Wrapper>
+					<h1>Kontakt</h1>
+				</Wrapper>
+			</section>
 		</div>
 	);
 }
@@ -382,7 +454,7 @@ const WhyChooseCard = ({ icon: Icon, title, description }) => {
 		<DotBackground
 			className="bg-green-500 w-full rounded-2xl flex overflow-hidden flex-1 shadow-md"
 			classNameMask="bg-none ">
-			<div className="p-2 bg-linear-to-r from-green-500 to-green-500/20 flex flex-row gap-3 flex-1 z-10">
+			<div className="p-2 bg-linear-to-r from-green-400 to-green-400/20 flex flex-row gap-3 flex-1 z-10">
 				<div className="flex justify-center items-center p-2 rounded-xl bg-linear-to-br from-neutral-50/20 to-neutral-50/40 aspect-square">
 					<Icon className="h-8 w-8" />
 				</div>
