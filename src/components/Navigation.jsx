@@ -16,13 +16,37 @@ import Link from "next/link";
 import React, { useState } from "react";
 import Wrapper from "./Wrapper";
 import { Button } from "./ui/button";
-import { ArrowRight, Menu, X } from "lucide-react";
-import Image from "next/image";
+import { ArrowRight, Menu } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useLocale } from "next-intl";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function Navigation() {
 	const isMobile = useIsMobile();
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+	const locale = useLocale();
+	const router = useRouter();
+	const pathname = usePathname();
+	const searchParams = useSearchParams();
+
+	const switchLocale = (nextLocale) => {
+		if (nextLocale === locale) return;
+
+		const segments = pathname.split("/").filter(Boolean);
+		if (segments.length > 0) {
+			segments[0] = nextLocale;
+		} else {
+			segments.push(nextLocale);
+		}
+
+		const nextPathname = `/${segments.join("/")}`;
+		const queryString = searchParams.toString();
+		const hash = window.location.hash || "";
+		const nextUrl = `${nextPathname}${queryString ? `?${queryString}` : ""}${hash}`;
+
+		router.push(nextUrl);
+		setMobileMenuOpen(false);
+	};
 
 	const navItems = (
 		<>
@@ -115,6 +139,20 @@ export default function Navigation() {
 					</ScrollerAnim>
 				</div>
 			</Button>
+			{/* <div className="pt-4 border-t flex gap-2">
+				<Button
+					variant={locale === "pl" ? "default" : "outline"}
+					className="flex-1"
+					onClick={() => switchLocale("pl")}>
+					PL
+				</Button>
+				<Button
+					variant={locale === "en" ? "default" : "outline"}
+					className="flex-1"
+					onClick={() => switchLocale("en")}>
+					EN
+				</Button>
+			</div> */}
 		</div>
 	);
 
@@ -159,6 +197,20 @@ export default function Navigation() {
 								</ScrollerAnim>
 							</div>
 						</Button>
+						{/* <div className="flex gap-2">
+							<Button
+								size="sm"
+								variant={locale === "pl" ? "default" : "outline"}
+								onClick={() => switchLocale("pl")}>
+								PL
+							</Button>
+							<Button
+								size="sm"
+								variant={locale === "en" ? "default" : "outline"}
+								onClick={() => switchLocale("en")}>
+								EN
+							</Button>
+						</div> */}
 					</NavigationMenu>
 				)}
 			</Wrapper>

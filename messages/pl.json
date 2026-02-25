@@ -1,5 +1,91 @@
 {
   "HomePage": {
     "title": "Witaj"
+  },
+  "LocateHomePage": {
+    "hero": {
+      "badge": "Pracownicy z Polski, Ukrainy i Mołdawii",
+      "titlePrefix": "Twoja droga do",
+      "titleHighlight": "sukcesu",
+      "titleSuffix": "zaczyna się tutaj.",
+      "description": "<brand>Raw Job</brand> to agencja pracy, która łączy pracodawców z wykwalifikowanymi pracownikami. Niezależnie od tego, po której stronie jesteś - mamy rozwiazanie dla <you>Ciebie</you>."
+    },
+    "employers": {
+      "title": "Szukasz pracowników?",
+      "descriptionLine1": "Chcesz usprawnić proces i obniżyć koszty zatrudnienia?",
+      "descriptionLine2": "Potrzebujesz niezawodnych pracowników?",
+      "descriptionLine3": "Zapewniamy <strong>kompleksowy outsourcing</strong> i rekrutacje dostosowana do Twoich potrzeb.",
+      "bullets": {
+        "legalization": "Pelna legalizacja pobytu i pracy",
+        "legalService": "Obsluga prawna i dokumentacja",
+        "coordinator": "Dwujezyczny koordynator"
+      },
+      "ctaContact": "Skontaktuj się z nami",
+      "ctaOffer": "Poznaj ofertę"
+    },
+    "jobSeekers": {
+      "title": "Szukasz pracy?",
+      "descriptionLine1": "Szukasz stabilnego zatrudnienia w Polsce?",
+      "descriptionLine2": "Pomagamy pracownikom z <poland>Polski</poland>, <ukraine>Ukrainy</ukraine> i <moldova>Mołdawi</moldova> znaleźć odpowiednia prace i zapewniamy wsparcie na kazdym etapie.",
+      "bullets": {
+        "legalization": "Pomoc w legalizacji pobytu i pracy",
+        "training": "Szkolenia BHP i uprawnienia",
+        "support": "Wsparcie po zatrudnieniu"
+      },
+      "cta": "Przejdź do ofert pracy"
+    },
+    "offer": {
+      "heading": "Oferta",
+      "title": "Szukasz pracowników?",
+      "description": "Oferujemy pełen zakres usług związanych z rekrutacją, legalizacją i zatrudnieniem.",
+      "cards": {
+        "outsourcing": {
+          "title": "Outsourcing procesowy",
+          "description": "Współpraca na zasadach outsourcingu procesowego. Przejmujemy odpowiedzialność za cały proces rekrutacji i zatrudnienia."
+        },
+        "legalization": {
+          "title": "Legalizacja pobytu i pracy",
+          "description": "Pełny proces legalizacji pobytu i pracy cudzoziemcow z Ukrainy i Mołdawii. Od oświadczeń po karty pobytu."
+        },
+        "legalService": {
+          "title": "Obsluga prawna",
+          "description": "Kompleksowa obsluga prawna zatrudnienia cudzoziemcow - oświadczenia, zezwolenia, wizy, karty pobytu. Przygotowujemy dokumenty i składamy wnioski."
+        },
+        "highEmployment": {
+          "title": "Wysoki poziom zatrudnienia",
+          "description": "Utrzymanie wysokiego poziomu zatrudnienia dzięki stałemu monitorowaniu potrzeb kadrowych i szybkiej reakcji na zmiany."
+        },
+        "postSupport": {
+          "title": "Wsparcie po zatrudnieniu",
+          "description": "Nie konczymy na rekrutacji. Zapewniamy wsparcie po zatrudnieniu, pomagając w adaptacji pracownikow na nowym stanowisku."
+        },
+        "training": {
+          "title": "Szkolenia BHP i uprawnienia",
+          "description": "Szkolenia BHP stanowiskowe, uprawnienia na wozki unoszące, UDT oraz wysokiego składowania i wiele innych."
+        }
+      }
+    },
+    "outsourcingInfo": {
+      "title": "Czym jest outsourcing procesowy?",
+      "description": "Outsourcing procesowy to strategia zarządzania, w której Państwa firma zleca wykonanie określonych procesów biznesowych zewnętrzenemu dostawcy usług. Celem tego podejścia jest zwiększenie efektywności, skupienie się na kluczowych kompetencjach firmy oraz optymalizacja kosztów."
+    },
+    "forWho": {
+      "title": "Dla kogo?",
+      "description": "To rozwiązanie świetnie sprawdzi się w wielu branżach, począwszy od branż produkcyjnych, w których się specjalizujemy, a kończąc na branży logistycznej, hotelarskiej czy przemyśle sezonowym.",
+      "sectors": {
+        "production": "Produkcja",
+        "logistics": "Logistyka",
+        "hospitality": "Hotelarstwo",
+        "seasonal": "Przemysł sezonowy"
+      }
+    },
+    "about": {
+      "heading": "O nas",
+      "title": "Twój partner w rekrutacji i zatrudnieniu",
+      "description": "Jesteśmy firmą, która zajmuje się rekrutacją i zatrudnieniem pracowników z Polski oraz cudzoziemców dla firm o różnym profilu działalności. Dbamy o dostarczanie naszym klientom kandydatów zgodnie z ich potrzebami i wymaganiami. Naszym klientom zapewniamy wsparcie, jakim jest dwujęzyczny koordynator w celu zapewnienia prawidłowej komunikacji z pracownikami."
+    },
+    "contact": {
+      "heading": "Kontakt"
+    }
   }
 }

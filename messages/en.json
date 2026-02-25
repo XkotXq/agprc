@@ -1,0 +1,91 @@
+{
+  "HomePage": {
+    "title": "Welcome"
+  },
+  "LocateHomePage": {
+    "hero": {
+      "badge": "Employees from Poland, Ukraine and Moldova",
+      "titlePrefix": "Your path to",
+      "titleHighlight": "success",
+      "titleSuffix": "starts here.",
+      "description": "<brand>Raw Job</brand> is a recruitment agency connecting employers with qualified workers. No matter which side you are on – we have a solution for <you>you</you>."
+    },
+    "employers": {
+      "title": "Looking for employees?",
+      "descriptionLine1": "Do you want to streamline your hiring process and reduce employment costs?",
+      "descriptionLine2": "Need reliable and qualified workers?",
+      "descriptionLine3": "We provide <strong>comprehensive process outsourcing</strong> and recruitment tailored to your needs.",
+      "bullets": {
+        "legalization": "Full legalization of residence and work",
+        "legalService": "Legal support and documentation handling",
+        "coordinator": "Bilingual coordinator"
+      },
+      "ctaContact": "Contact us",
+      "ctaOffer": "Explore our offer"
+    },
+    "jobSeekers": {
+      "title": "Looking for a job?",
+      "descriptionLine1": "Are you looking for stable employment in Poland?",
+      "descriptionLine2": "We help workers from <poland>Poland</poland>, <ukraine>Ukraine</ukraine> and <moldova>Moldova</moldova> find suitable jobs and provide support at every stage.",
+      "bullets": {
+        "legalization": "Assistance with residence and work legalization",
+        "training": "Health & Safety training and certifications",
+        "support": "Post-employment support"
+      },
+      "cta": "View job offers"
+    },
+    "offer": {
+      "heading": "Our Offer",
+      "title": "Looking for employees?",
+      "description": "We provide a full range of services related to recruitment, legalization and employment.",
+      "cards": {
+        "outsourcing": {
+          "title": "Process outsourcing",
+          "description": "Cooperation based on process outsourcing. We take full responsibility for the entire recruitment and employment process."
+        },
+        "legalization": {
+          "title": "Residence and work legalization",
+          "description": "Complete legalization process for foreign workers from Ukraine and Moldova. From declarations to residence cards."
+        },
+        "legalService": {
+          "title": "Legal services",
+          "description": "Comprehensive legal support for employing foreign workers – declarations, permits, visas and residence cards. We prepare documents and submit applications on your behalf."
+        },
+        "highEmployment": {
+          "title": "High employment stability",
+          "description": "Maintaining a high level of employment through continuous workforce monitoring and fast response to changing needs."
+        },
+        "postSupport": {
+          "title": "Post-employment support",
+          "description": "We don’t stop at recruitment. We provide ongoing support after employment, helping workers adapt to their new positions."
+        },
+        "training": {
+          "title": "H&S training and certifications",
+          "description": "Workplace Health & Safety training, forklift licenses, UDT certifications and high-bay warehouse qualifications, and more."
+        }
+      }
+    },
+    "outsourcingInfo": {
+      "title": "What is process outsourcing?",
+      "description": "Process outsourcing is a management strategy in which a company delegates selected business processes to an external service provider. The goal is to increase efficiency, focus on core competencies and optimize operational costs."
+    },
+    "forWho": {
+      "title": "Who is it for?",
+      "description": "This solution works perfectly across many industries – from manufacturing, where we specialize, to logistics, hospitality and seasonal industries.",
+      "sectors": {
+        "production": "Manufacturing",
+        "logistics": "Logistics",
+        "hospitality": "Hospitality",
+        "seasonal": "Seasonal industry"
+      }
+    },
+    "about": {
+      "heading": "About us",
+      "title": "Your partner in recruitment and employment",
+      "description": "We are a company specializing in recruitment and employment of Polish and foreign workers for businesses across various industries. We ensure that our clients receive candidates tailored to their specific needs and requirements. We provide dedicated support through a bilingual coordinator to guarantee smooth and effective communication."
+    },
+    "contact": {
+      "heading": "Contact"
+    }
+  }
+}
