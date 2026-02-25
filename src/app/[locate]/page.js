@@ -29,8 +29,10 @@ import HorizontalOffersGsap from "@/components/horizontalOffersGsap";
 import { BackgroundBeams } from "@/components/ui/background-beams";
 import { Spotlight } from "@/components/ui/spotlight-new";
 import { getTranslations } from "next-intl/server";
+import ScrollToLink from "@/components/ScrollToPlugin";
 
-export default async function Home() {
+export default async function Home({ params }) {
+	const { locate } = await params;
 	const t = await getTranslations("LocateHomePage");
 	return (
 		<div>
@@ -89,10 +91,12 @@ export default async function Home() {
 										<div className="rounded-xl bg-green-400 p-3 shadow-md">
 											{t("employers.ctaContact")}
 										</div>
-										<div className="rounded-xl p-3 shadow-md bg-green-200 flex items-center justify-center gap-2">
+										<ScrollToLink
+											href="#oferta"
+											className="rounded-xl p-3 shadow-md bg-green-200 flex items-center justify-center gap-2">
 											{t("employers.ctaOffer")}{" "}
-											<ArrowDownIcon className="h-6 w-6" />{" "}
-										</div>
+											<ArrowDownIcon className="h-6 w-6" />
+										</ScrollToLink>
 									</div>
 								</div>
 							</div>
@@ -129,9 +133,11 @@ export default async function Home() {
 									</div>
 
 									<div className="flex gap-3">
-										<div className="rounded-xl bg-neutral-100 p-3 shadow-md font-medium">
-											{t("jobSeekers.cta")}
-										</div>
+										<Link href="/oferty-pracy">
+											<div className="rounded-xl bg-neutral-100 p-3 shadow-md font-medium">
+												{t("jobSeekers.cta")}
+											</div>
+										</Link>
 									</div>
 								</div>
 							</div>

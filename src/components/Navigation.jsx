@@ -20,6 +20,7 @@ import { ArrowRight, Menu } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useLocale } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
 
 export default function Navigation() {
 	const isMobile = useIsMobile();
@@ -160,10 +161,10 @@ export default function Navigation() {
 		<div className="py-4 sticky top-0 bg-neutral-50/60 backdrop-blur-md border-bg-neutral-100 border-b z-1000">
 			<Wrapper className="flex justify-between items-center">
 				<div className="flex justify-center items-center">
-					<a href="/">
-						<h1>LOGO</h1>
-						{/* <Image src="/globe.svg" height={40} width={40} alt="" /> */}
-					</a>
+					<Link href="/" className="flex gap-1 items-end">
+						<Image src="/rawJobLogo.svg" height={50} width={50} alt="" />
+						<p className="text-[18px]">RAW JOB</p>
+					</Link>
 				</div>
 				{isMobile ? (
 					<Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
