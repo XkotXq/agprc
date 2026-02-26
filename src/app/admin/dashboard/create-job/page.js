@@ -167,8 +167,8 @@ export default function CreateJobPage() {
 	return (
 		<>
 			<SidebarTrigger className="m-2" />
-			<Wrapper>
-				<div className="px-3 md:px-0 box-border">
+			<Wrapper className="px-2 overflow-hidden">
+				<div className="px-3 md:px-0 box-border max-w-full">
 					<h1 className="text-3xl font-bold my-6">
 						Utwórz nowe ogłoszenie pracy
 					</h1>
@@ -427,22 +427,6 @@ export default function CreateJobPage() {
 												setFormData((prev) => ({
 													...prev,
 													date_posted: e.target.value,
-												}))
-											}
-										/>
-									</div>
-									<div>
-										<label className="block text-sm font-medium mb-1">
-											Data wygaśnięcia
-										</label>
-										<Input
-											type="datetime-local"
-											name="date_expires"
-											value={formData.date_expires}
-											onChange={(e) =>
-												setFormData((prev) => ({
-													...prev,
-													date_expires: e.target.value,
 												}))
 											}
 										/>

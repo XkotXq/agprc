@@ -30,6 +30,7 @@ import { BackgroundBeams } from "@/components/ui/background-beams";
 import { Spotlight } from "@/components/ui/spotlight-new";
 import { getTranslations } from "next-intl/server";
 import ScrollToLink from "@/components/ScrollToPlugin";
+import { Button } from "@/components/ui/button";
 
 export default async function Home({ params }) {
 	const { locate } = await params;
@@ -38,18 +39,18 @@ export default async function Home({ params }) {
 		<div>
 			<DotBackground>
 				<section className="min-h-[80vh] flex flex-col relative overflow-hidden max-w-[100vw] pt-13 pb-18">
-					<div className="absolute bg-green-200/50 top-0 right-0 rounded-full h-[30vw] w-[30vw] translate-x-1/3 -translate-y-1/3 z-0 pointer-events-none flex items-center justify-center" />
-					<div className="mx-auto rounded-full p-1 px-2 bg-linear-to-br from-green-400/30 to-green-500/40 inline-flex gap-1 items-center">
+					<div className="absolute bg-green-200/50 top-0 right-0 rounded-full md:h-[30vw] md:w-[30vw] h-[60vw] w-[60vw]  translate-x-1/3 -translate-y-1/3 z-0 pointer-events-none flex items-center justify-center" />
+					<div className="mx-auto rounded-full p-1 px-2 bg-linear-to-br from-green-400/30 to-green-500/40 inline-flex gap-1 items-center z-10">
 						<UserIcon className="h-3.5 w-3.5" />
 						<p className="text-sm">{t("hero.badge")}</p>
 					</div>
-					<div className="mb-18 mt-6 flex flex-col justify-center">
-						<h1 className="text-6xl text-center font-bold mt-2 mb-3 max-w-3xl mx-auto leading-tight">
+					<div className="mb-18 mt-6 flex flex-col justify-center z-10">
+						<h1 className="md:text-6xl sm:text-5xl text-4xl text-center font-bold mt-2 mb-3 max-w-3xl mx-auto leading-tight">
 							{t("hero.titlePrefix")}{" "}
 							<Highlight>{t("hero.titleHighlight")}</Highlight>{" "}
 							{t("hero.titleSuffix")}
 						</h1>
-						<p className="text-center max-w-4xl mx-auto my-5 text-xl">
+						<p className="text-center max-w-4xl mx-auto my-5 md:text-xl text-md md:px-0 px-2">
 							{t.rich("hero.description", {
 								brand: (chunks) => <strong>{chunks}</strong>,
 								you: (chunks) => <strong>{chunks}</strong>,
@@ -57,8 +58,8 @@ export default async function Home({ params }) {
 						</p>
 					</div>
 					<Wrapper className="w-full mb-5">
-						<div className="flex flex-row h-full flex-1 gap-5 px-5">
-							<div className="flex-1 rounded-3xl p-4 relative overflow-hidden bg-linear-to-br from-green-400 to-green-500">
+						<div className="flex flex-row h-full flex-1 gap-5 px-5 flex-wrap">
+							<div className="flex-1 rounded-3xl p-4 relative overflow-hidden bg-linear-to-br from-green-400 to-green-500 min-w-87.5">
 								<div className="absolute bg-green-300/50 top-0 right-0 rounded-full h-56 w-56 translate-x-1/3 -translate-y-1/3 z-0 pointer-events-none flex items-center justify-center" />
 								<div className="relative z-10">
 									<span className="inline-flex items-center gap-3 text-neutral-800 text-3xl font-bold">
@@ -100,7 +101,7 @@ export default async function Home({ params }) {
 									</div>
 								</div>
 							</div>
-							<div className="flex-1 bg-linear-to-br from-neutral-100 to-neutral-200 rounded-3xl p-4 relative overflow-hidden">
+							<div className="flex-1 bg-linear-to-br from-neutral-100 to-neutral-200 rounded-3xl p-4 relative overflow-hidden min-w-87.5">
 								<div className="absolute bg-neutral-200 top-0 right-0 rounded-full h-56 w-56 translate-x-1/3 -translate-y-1/3 z-0 pointer-events-none" />
 								<div className="relative z-10 flex flex-col justify-between h-full">
 									<div>
@@ -167,7 +168,7 @@ export default async function Home({ params }) {
 					<p className="mt-3 text-center">{t("offer.description")}</p>
 
 					<div className="mt-10 w-full overflow-visible">
-						<div className="grid  gap-5 flex-wrap grid-cols-[repeat(auto-fit,minmax(300px,400px))]">
+						<div className="flex mx-auto gap-5 flex-wrap justify-center">
 							<OfferCard
 								icon={MousePointer}
 								title={t("offer.cards.outsourcing.title")}
@@ -213,7 +214,7 @@ export default async function Home({ params }) {
 						<h1 className="text-3xl font-bold text-center py-5">
 							Dlaczego Raw Job jest najlepszym wyborem?
 						</h1>
-						<div className="grid grid-cols-2 gap-5 grid-rows-3 flex-2">
+						<div className="grid sm:grid-cols-2 gap-5 sm:grid-rows-3 grid-cols-1 grid-rows-6">
 							<WhyChooseCard
 								icon={BoltIcon}
 								title="Szybka reakcja"
@@ -259,8 +260,8 @@ export default async function Home({ params }) {
 			</section> */}
 
 			<section className="py-12">
-				<Wrapper className="flex gap-5">
-					<div className="rounded-3xl p-2 relative flex-1 shadow-sm bg-linear-to-br from-neutral-100 to-neutral-200">
+				<Wrapper className="flex gap-5 flex-wrap">
+					<div className="rounded-3xl p-2 relative flex-1 shadow-sm bg-linear-to-br from-neutral-100 to-neutral-200 min-w-87.5">
 						<div className="flex flex-col bg-neutral-100 w-full h-full p-6 rounded-2xl shadow-sm relative overflow-hidden">
 							<div className="relative z-10">
 								<h1 className="text-3xl font-bold">
@@ -309,12 +310,12 @@ export default async function Home({ params }) {
 							</div>
 						</div>
 					</div>
-					<div className="flex flex-col bg-linear-to-br from-green-400 to-green-500 rounded-3xl p-8 relative overflow-hidden flex-1">
+					<div className="flex flex-col bg-linear-to-br from-green-400 to-green-500 rounded-3xl p-8 relative overflow-hidden flex-1 min-w-87.5">
 						<div className="flex-1 z-10">
 							<h1 className="text-3xl font-bold">{t("forWho.title")}</h1>
 							<p className="pt-3">{t("forWho.description")}</p>
 						</div>
-						<div className="gap-3 z-10 flex-2 flex mt-5">
+						<div className="gap-3 z-10 flex-2 flex mt-5 flex-wrap">
 							<div className="flex flex-col gap-2 items-center p-2 rounded-2xl flex-1">
 								<div className="p-2 rounded-2xl bg-linear-to-br from-green-200 to-green-200/90 flex items-center justify-center w-min">
 									<TruckIcon className="h-8 w-8" />
@@ -447,74 +448,83 @@ export default async function Home({ params }) {
 				</ul>
 			</section> */}
 
-			<section className="py-18">
-				<Wrapper>
-					<h1 className="text-6xl text-center font-bold text-green-500 my-5">
-						{t("about.heading")}
-					</h1>
-					<div className="flex">
-						<div className="flex-2 p-2">
-							<h2 className="text-4xl font-bold mb-2">{t("about.title")}</h2>
+			<section id="o-nas" className="bg-[#f5f5f5] py-20 sm:py-24">
+				<Wrapper className="px-4 sm:px-6 lg:px-8">
+					<div className="mx-auto max-w-4xl text-center">
+						<h2 className="text-6xl text-center font-bold text-green-500 ">
+						O nas
+					</h2>
+						<h2 className="mt-5 text-4xl font-bold leading-tight text-neutral-900 sm:text-5xl">
+							Twój partner w rekrutacji i zatrudnieniu
+						</h2>
+						<p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-neutral-700 sm:text-lg">
+							Zajmujemy się kompleksową rekrutacją i zatrudnianiem pracowników z
+							Polski oraz z zagranicy. Wspieramy firmy w różnych branżach,
+							zapewniając dopasowanych kandydatów oraz pełne wsparcie
+							organizacyjne i prawne.
+						</p>
+						<p className="mx-auto mt-3 max-w-3xl text-base leading-7 text-neutral-700 sm:text-lg">
+							Naszym priorytetem jest skuteczność, szybka reakcja oraz
+							indywidualne podejście do każdego klienta.
+						</p>
+					</div>
 
-							<p className="text-lg max-w-[70%]">
-								Jesteśmy firmą, która zajmuje się rekrutacją i zatrudnieniem
-								pracowników z Polski oraz cudzoziemców dla firm o różnym profilu
-								działalności. Dbamy o dostarczanie naszym klientom kandydatów
-								zgodnie z ich potrzebami i wymaganiami. Naszym klientom
-								zapewniamy wsparcie, jakim jest dwujęzyczny koordynator w celu
-								zapewnienia prawidłowej komunikacji z pracownikami.
-							</p>
-							<div>
-								<ul className="font-medium ml-5 mt-3">
-									<li>
-										<CheckLine className="bg-green-300/80">
-											Rekrutacja pracowników z Polski i zagranicy
-										</CheckLine>
-									</li>
-									<li>
-										<CheckLine className="bg-green-300/80">
-											Dla każdego kliena dwujęzyczny koordynator
-										</CheckLine>
-									</li>
-									<li>
-										<CheckLine className="bg-green-300/80">
-											Indywidualne podejście do każdej firmy
-										</CheckLine>
-									</li>
-									<li>
-										<CheckLine className="bg-green-300/80">
-											Pełna obsługa prawna zatrudnienia
-										</CheckLine>
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div>
-							<img src="/rawJobLogo.svg" width={350} alt="raw job logo" />
+					<div className="mt-12">
+						<h3 className="text-center text-2xl font-bold text-neutral-900 sm:text-3xl">
+							Dlaczego warto z nami współpracować?
+						</h3>
+						<div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2">
+							<AboutFeatureCard
+								icon={MapPin}
+								title="Rekrutacja krajowa i międzynarodowa"
+								description="Pozyskujemy pracowników z Polski i zagranicy, dopasowanych do potrzeb Twojej firmy."
+							/>
+							<AboutFeatureCard
+								icon={UserIcon}
+								title="Dwujęzyczny koordynator"
+								description="Zapewniamy stałe wsparcie koordynatora, który dba o komunikację i sprawny przebieg współpracy."
+							/>
+							<AboutFeatureCard
+								icon={LightBulbIcon}
+								title="Indywidualne podejście"
+								description="Każdy projekt analizujemy osobno, dostosowując model współpracy do specyfiki branży."
+							/>
+							<AboutFeatureCard
+								icon={ScaleIcon}
+								title="Pełna obsługa prawna"
+								description="Zajmujemy się formalnościami, dokumentacją i legalizacją zatrudnienia."
+							/>
 						</div>
 					</div>
 				</Wrapper>
 			</section>
-			<section className="my-18">
+			<section id="kontakt" className="my-18">
 				<Wrapper>
 					<DotBackground
 						className="bg-linear-to-br from-green-400 to-green-500 p-10 rounded-3xl relative overflow-hidden shadow-md"
 						classNameMask="bg-green-500/50">
 						<div className="z-10 relative">
+							<div className="flex gap-5 flex-wrap justify-center w-full">
+								<p className="text-3xl">Szukasz pracy?</p>
+								<p className="text-3xl">Szukasz pracowników?</p>
+								{/* <p className="text-3xl">
+									Chcesz usprawnić proces <br /> i koszty zatudnienia?
+								</p> */}
+							</div>
 							<h1 className="text-5xl text-center font-medium">
 								Zapraszamy do współpracy!
 							</h1>
 							<div className="flex justify-between my-10">
-								<div>
-									<p className="text-3xl">Szukasz pracowników?</p>
-									<p className="text-3xl">
-										Chcesz usprawnić proces <br /> i koszty zatudnienia?
-									</p>
-								</div>
-								<div className="text-3xl flex flex-col gap-1">
-									<p>+48 534 409 481</p>
-									<p>+380 932 870 621 (Viber)</p>
-									<p>j.redlicki@rawjob.pl</p>
+								<div className="text-3xl flex flex-row justify-center gap-4 w-full">
+									<Button>
+										<p>+48 534 409 481</p>
+									</Button>
+									<Button>
+										<p>+380 932 870 621 (Viber)</p>
+									</Button>
+									<Button>
+										<p>j.redlicki@rawjob.pl</p>
+									</Button>
 								</div>
 							</div>
 						</div>
@@ -615,14 +625,30 @@ const WhyChooseCard = ({ icon: Icon, title, description }) => {
 	);
 };
 
+const AboutFeatureCard = ({ icon: Icon, title, description }) => {
+	return (
+		<div className="flex items-stretch gap-4">
+			<div className="flex aspect-square shrink-0 self-stretch items-center justify-center rounded-xl bg-linear-to-br from-neutral-100 to-neutral-200 text-neutral-900 shadow-md">
+				<Icon className="h-8 w-8" />
+			</div>
+			<div>
+				<h4 className="text-xl font-semibold text-neutral-900">{title}</h4>
+				<p className="mt-2 text-sm leading-6 text-neutral-700 sm:text-base">
+					{description}
+				</p>
+			</div>
+		</div>
+	);
+};
+
 const OfferCard = ({ icon: Icon, title, description, decoration }) => {
 	return (
-		<article className="w-full shrink-0 flex rounded-2xl p-2 shadow-sm bg-linear-to-br from-neutral-100 to-neutral-200">
+		<article className="shrink-0 flex rounded-2xl p-2 shadow-sm bg-linear-to-br from-neutral-100 to-neutral-200 min-w-70 max-w-100">
 			<div className="bg-neutral-100 flex-1 p-4 rounded-xl shadow-sm relative overflow-hidden isolate">
 				<div className="relative z-10">
 					<div className="flex gap-2 items-center">
 						<div className="p-2 bg-neutral-200 rounded-xl min-w-fit">
-							<Icon className="h-4.5 w-4.5" />
+							<Icon className="h-5 w-5" />
 						</div>
 						<h2 className="text-xl font-semibold">{title}</h2>
 					</div>

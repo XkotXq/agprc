@@ -115,11 +115,11 @@ export const columns = [
 			);
 		},
 		cell: ({ row }) => (
-			<div className="capitalize">
+			<div className="capitalize flex">
 				{row.getValue("is_active") ? (
-					<div className="text-green-200">tak</div>
+					<div className="text-green-600 bg-green-200/20 p-2 rounded-2xl">tak</div>
 				) : (
-					<div className="text-red-200">nie</div>
+					<div className="text-red-600 bg-red-200/20 p-2 rounded-2xl">nie</div>
 				)}
 			</div>
 		),

@@ -3,7 +3,7 @@ import React, { useState, useCallback, useMemo, forwardRef, useImperativeHandle 
 import { createEditor, Transforms, Editor, Element as SlateElement } from "slate";
 import { Slate, Editable, withReact, useSlate } from "slate-react";
 import { withHistory } from "slate-history";
-import { Bold, Italic, Underline, Code, Heading1, Heading2, List, ListOrdered, AlignLeft, AlignCenter, AlignRight, AlignJustify } from "lucide-react";
+import { Bold, Italic, Underline, Code, Heading1, Heading2, List, ListOrdered, AlignLeft, AlignCenter, AlignRight, AlignJustify, Minus } from "lucide-react";
 import clsx from "clsx";
 import { cn } from "@/lib/utils";
 
@@ -21,8 +21,18 @@ const initialValue = [
   { type: "paragraph", children: [{ text: "" }] },
 ];
 
+const withHorizontalRule = (editor) => {
+  const { isVoid } = editor;
+  editor.isVoid = (element) =>
+    element.type === "horizontal-rule" ? true : isVoid(element);
+  return editor;
+};
+
 const SlateEditor = forwardRef(({ setDescription }, ref) => {
-  const editor = useMemo(() => withHistory(withReact(createEditor())), []);
+  const editor = useMemo(
+    () => withHistory(withReact(withHorizontalRule(createEditor()))),
+    []
+  );
   const [value, setValue] = useState(initialValue);
 
   const renderElement = useCallback(props => <Element {...props} />, []);
@@ -65,6 +75,7 @@ const SlateEditor = forwardRef(({ setDescription }, ref) => {
         <BlockButton format="center" icon={<AlignCenter className="size-5" />} />
         <BlockButton format="right" icon={<AlignRight className="size-5" />} />
         <BlockButton format="justify" icon={<AlignJustify className="size-5" />} />
+        <HrButton icon={<Minus className="size-5" />} />
       </div>
 
       <Editable
@@ -74,7 +85,7 @@ const SlateEditor = forwardRef(({ setDescription }, ref) => {
         spellCheck={false}
         autoFocus
         className={cn(
-          "file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-neutral-900 border-input w-full min-w-0 rounded-xl border bg-neutral-900 px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+          "file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-neutral-900 border-input w-full min-w-0 rounded-xl border bg-neutral-100 px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
           "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
           "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
         )}
@@ -95,36 +106,40 @@ function toggleBlock(editor, format) {
   const isActive = isBlockActive(editor, format, TEXT_ALIGN_TYPES.includes(format) ? "align" : "type");
   const isList = LIST_TYPES.includes(format);
 
+  Transforms.unwrapNodes(editor, {
+    match: n =>
+      SlateElement.isElement(n) &&
+      LIST_TYPES.includes(n.type) &&
+      !TEXT_ALIGN_TYPES.includes(format),
+    split: true,
+  });
+
   if (TEXT_ALIGN_TYPES.includes(format)) {
-    Transforms.setNodes(editor, { align: isActive ? undefined : format }, {
-      match: n => SlateElement.isElement(n)
-    });
+    Transforms.setNodes(
+      editor,
+      { align: isActive ? undefined : format },
+      { match: n => SlateElement.isElement(n) }
+    );
     return;
   }
 
-  if (isList) {
-    if (isActive) {
-      Transforms.unwrapNodes(editor, {
-        match: n => SlateElement.isElement(n) && LIST_TYPES.includes(n.type),
-        split: true
-      });
-      Transforms.setNodes(editor, { type: "paragraph" }, {
-        match: n => SlateElement.isElement(n) && n.type === "list-item",
-        split: true
-      });
-    } else {
-      Transforms.setNodes(editor, { type: "list-item" }, {
-        match: n => SlateElement.isElement(n) && !LIST_TYPES.includes(n.type) && n.type !== "list-item"
-      });
-      const block = { type: format, children: [] };
-      Transforms.wrapNodes(editor, block, { split: true });
-    }
-  } else {
-    const newType = isActive ? "paragraph" : format;
-    Transforms.setNodes(editor, { type: newType }, {
-      match: n => SlateElement.isElement(n)
-    });
+  const newType = isActive ? "paragraph" : isList ? "list-item" : format;
+  Transforms.setNodes(
+    editor,
+    { type: newType },
+    { match: n => SlateElement.isElement(n) && n.type !== "numbered-list" && n.type !== "bulleted-list" }
+  );
+
+  if (!isActive && isList) {
+    const block = { type: format, children: [] };
+    Transforms.wrapNodes(editor, block);
   }
+}
+
+function insertHorizontalRule(editor) {
+  const hr = { type: "horizontal-rule", children: [{ text: "" }] };
+  const paragraph = { type: "paragraph", children: [{ text: "" }] };
+  Transforms.insertNodes(editor, [hr, paragraph]);
 }
 
 function toggleMark(editor, format) {
@@ -152,6 +167,15 @@ function Element({ attributes, children, element }) {
   if ("align" in element) style.textAlign = element.align;
 
   switch (element.type) {
+    case "horizontal-rule":
+      return (
+        <div {...attributes}>
+          <div contentEditable={false}>
+            <hr className="my-3 border-neutral-500/60" />
+          </div>
+          {children}
+        </div>
+      );
     case "bulleted-list": return <ul className="list-disc ml-5" {...attributes}>{children}</ul>;
     case "numbered-list": return <ol className="list-decimal ml-5" {...attributes}>{children}</ol>;
     case "list-item": return <li {...attributes}>{children}</li>;
@@ -201,6 +225,20 @@ const MarkButton = ({ format, icon }) => {
           ? "bg-neutral-600/50 hover:bg-neutral-500/50"
           : "hover:bg-neutral-700/50"
       )}
+    >
+      {icon}
+    </button>
+  );
+};
+
+const HrButton = ({ icon }) => {
+  const editor = useSlate();
+  return (
+    <button
+      type="button"
+      onPointerDown={e => e.preventDefault()}
+      onClick={() => insertHorizontalRule(editor)}
+      className="rounded-xl p-2 aspect-square hover:bg-neutral-700/50"
     >
       {icon}
     </button>

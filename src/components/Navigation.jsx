@@ -21,6 +21,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { useLocale } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
+import ScrollToLink from "./ScrollToPlugin";
 
 export default function Navigation() {
 	const isMobile = useIsMobile();
@@ -51,7 +52,7 @@ export default function Navigation() {
 
 	const navItems = (
 		<>
-			<NavigationMenuItem className="group/navLink">
+			{/* <NavigationMenuItem className="group/navLink">
 				<NavigationMenuTrigger className="h-6 overflow-hidden duration-500 z-100">
 					<div className="flex flex-col h-6">
 						<ScrollerAnim>Dla pracodawcy</ScrollerAnim>
@@ -82,6 +83,15 @@ export default function Navigation() {
 						</li>
 					</ul>
 				</NavigationMenuContent>
+			</NavigationMenuItem> */}
+				<NavigationMenuItem className="group/navLink">
+				<NavigationMenuLink asChild>
+					<ScrollToLink
+						href={`/${locale}/#oferta`}
+						className="h-6 overflow-hidden duration-500">
+						<ScrollerAnim>Oferta</ScrollerAnim>
+					</ScrollToLink>
+				</NavigationMenuLink>
 			</NavigationMenuItem>
 			<NavigationMenuItem className="group/navLink">
 				<NavigationMenuLink
@@ -91,17 +101,21 @@ export default function Navigation() {
 				</NavigationMenuLink>
 			</NavigationMenuItem>
 			<NavigationMenuItem className="group/navLink">
-				<NavigationMenuLink
-					href="/o-nas"
-					className="h-6 overflow-hidden duration-500">
-					<ScrollerAnim>O nas</ScrollerAnim>
+				<NavigationMenuLink asChild>
+					<ScrollToLink
+						href={`/${locale}/#o-nas`}
+						className="h-6 overflow-hidden duration-500">
+						<ScrollerAnim>O nas</ScrollerAnim>
+					</ScrollToLink>
 				</NavigationMenuLink>
 			</NavigationMenuItem>
 			<NavigationMenuItem className="group/navLink">
-				<NavigationMenuLink
-					href="/kontakt"
-					className="h-6 overflow-hidden duration-500">
-					<ScrollerAnim>Kontakt</ScrollerAnim>
+				<NavigationMenuLink asChild>
+					<ScrollToLink
+						href={`/${locale}/#kontakt`}
+						className="h-6 overflow-hidden duration-500">
+						<ScrollerAnim>Kontakt</ScrollerAnim>
+					</ScrollToLink>
 				</NavigationMenuLink>
 			</NavigationMenuItem>
 		</>
@@ -115,18 +129,18 @@ export default function Navigation() {
 				className="text-lg hover:underline">
 				Oferty pracy
 			</Link>
-			<Link
-				href="/o-nas"
+			<ScrollToLink
+				href={`/${locale}/#o-nas`}
 				onClick={() => setMobileMenuOpen(false)}
 				className="text-lg hover:underline">
 				O nas
-			</Link>
-			<Link
-				href="/kontakt"
+			</ScrollToLink>
+			<ScrollToLink
+				href={`/${locale}/#kontakt`}
 				onClick={() => setMobileMenuOpen(false)}
 				className="text-lg hover:underline">
 				Kontakt
-			</Link>
+			</ScrollToLink>
 			{/* <div className="pt-4 border-t">
 				<div className="text-lg mb-2">Dla pracodawcy</div>
 				<div className="text-sm text-neutral-400">jakaś tam lista</div>
@@ -161,9 +175,9 @@ export default function Navigation() {
 		<div className="py-4 sticky top-0 bg-neutral-50/60 backdrop-blur-md border-bg-neutral-100 border-b z-1000">
 			<Wrapper className="flex justify-between items-center">
 				<div className="flex justify-center items-center">
-					<Link href="/" className="flex gap-1 items-end">
+					<Link href="/" className="flex gap-1 items-end justify-center">
 						<Image src="/rawJobLogo.svg" height={50} width={50} alt="" />
-						<p className="text-[18px]">RAW JOB</p>
+						{/* <p className="text-4xl">RAW JOB</p> */}
 					</Link>
 				</div>
 				{isMobile ? (
